@@ -10,7 +10,7 @@ URL:            https://github.com/argoproj/argo-cd
 Source0:        %{url}/releases/download/v%{version}/argocd-linux-amd64
 Source1:        https://raw.githubusercontent.com/argoproj/argo-cd/v%{version}/LICENSE
 
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 
 %description
 Argo CD is a declarative continuous delivery tool for Kubernetes. This package
