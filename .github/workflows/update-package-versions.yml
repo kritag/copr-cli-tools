@@ -1,0 +1,54 @@
+name: Update Package Versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to update, or "all"
+        required: true
+        default: all
+  schedule:
+    - cron: "23 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Update package versions
+        env:
+          INPUT_PACKAGE: ${{ github.event.inputs.package }}
+        run: |
+          set -euo pipefail
+          chmod +x scripts/bump-version.sh scripts/update-from-github-release.sh
+
+          if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "all" ]]; then
+            scripts/update-from-github-release.sh "${INPUT_PACKAGE}"
+          else
+            while IFS= read -r meta; do
+              package="$(basename "$(dirname "${meta}")")"
+              scripts/update-from-github-release.sh "${package}"
+            done < <(find packages -mindepth 2 -maxdepth 2 -name upstream.env | sort)
+          fi
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No version changes detected"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/*/*.spec
+          git commit -m "Update package versions"
+          git push

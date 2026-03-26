@@ -25,6 +25,25 @@ Current target packages:
 - `packages/<name>/` contains packaging files for one tool
 - `scripts/` contains local helper scripts for version bumps and builds
 
+## Version updates
+
+Local bump for one package:
+
+```bash
+scripts/bump-version.sh yq 4.52.4
+```
+
+Update one package from the latest GitHub release:
+
+```bash
+scripts/update-from-github-release.sh yq
+```
+
+Packages that support release tracking have a `packages/<name>/upstream.env`
+file. The GitHub Actions workflow in
+`.github/workflows/update-package-versions.yml` can run on a schedule or by
+manual dispatch to bump tracked package versions automatically.
+
 Suggested COPR project name:
 
 - `yourname/cli-tools`
