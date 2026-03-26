@@ -28,7 +28,8 @@ cargo build --frozen --release --all-features
 install -Dpm0755 target/release/zoxide %{buildroot}%{_bindir}/zoxide
 install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 install -Dpm0644 README.md %{buildroot}%{_docdir}/%{name}/README.md
-install -Dpm0644 man/man1/*.1 %{buildroot}%{_mandir}/man1/
+mkdir -p %{buildroot}%{_mandir}/man1
+install -pm0644 man/man1/*.1 %{buildroot}%{_mandir}/man1/
 install -Dpm0644 contrib/completions/_zoxide %{buildroot}%{_datadir}/zsh/site-functions/_zoxide
 install -Dpm0644 contrib/completions/zoxide.fish %{buildroot}%{_datadir}/fish/vendor_completions.d/zoxide.fish
 install -Dpm0644 contrib/completions/zoxide.nu %{buildroot}%{_datadir}/nushell/vendor/autoload/zoxide.nu
