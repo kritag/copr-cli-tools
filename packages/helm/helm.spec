@@ -24,7 +24,7 @@ GOFLAGS="-mod=readonly" go mod vendor -v
 export CGO_LDFLAGS="%{build_ldflags}"
 export CGO_CFLAGS="%{build_cflags}"
 export CGO_CXXFLAGS="%{build_cxxflags}"
-export CGO_CPPFLAGS="%{build_cppflags}"
+export CGO_CPPFLAGS="${CPPFLAGS}"
 export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
 
 go build -v \
@@ -32,7 +32,7 @@ go build -v \
     -compressdwarf=false \
     -linkmode=external \
     -X helm.sh/helm/v4/internal/version.version=v%{version} \
-    -X helm.sh/helm/v4/internal/version.gitCommit=$(git rev-parse HEAD) \
+    -X helm.sh/helm/v4/internal/version.gitCommit=v%{version} \
   " \
   ./cmd/helm
 
