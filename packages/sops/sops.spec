@@ -41,9 +41,9 @@ go build \
 go test
 
 %install
-install -Dpm0644 %{_builddir}/bash_autocomplete \
+install -Dpm0644 %{_sourcedir}/bash_autocomplete \
   %{buildroot}%{_datadir}/bash-completion/completions/sops
-install -Dpm0644 %{_builddir}/zsh_autocomplete \
+install -Dpm0644 %{_sourcedir}/zsh_autocomplete \
   %{buildroot}%{_datadir}/zsh/site-functions/_sops
 install -Dpm0755 sops %{buildroot}%{_bindir}/sops
 install -Dpm0644 README.rst %{buildroot}%{_docdir}/%{name}/README.rst
