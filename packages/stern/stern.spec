@@ -5,7 +5,7 @@ Summary:        Multi pod and container log tailing for Kubernetes
 
 License:        Apache-2.0
 URL:            https://github.com/stern/stern
-Source0:        %{name}-%{version}.tar.gz::%{url}/archive/refs/tags/v%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  go
 Requires:       glibc
