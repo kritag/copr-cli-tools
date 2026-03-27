@@ -22,6 +22,7 @@ kubectl is the command-line client for Kubernetes clusters.
 
 %build
 export GOTOOLCHAIN=local
+export CGO_ENABLED=1
 export CGO_CPPFLAGS="${CPPFLAGS}"
 export CGO_CFLAGS="${CFLAGS}"
 export CGO_CXXFLAGS="${CXXFLAGS}"
