@@ -9,8 +9,6 @@ Source0:        %{url}/archive/refs/tags/v%{version}/kubernetes-%{version}.tar.g
 
 BuildRequires:  git-core
 BuildRequires:  go
-BuildRequires:  make
-BuildRequires:  rsync
 
 ExclusiveArch:  x86_64
 
@@ -27,14 +25,26 @@ export CGO_CPPFLAGS="${CPPFLAGS}"
 export CGO_CFLAGS="${CFLAGS}"
 export CGO_CXXFLAGS="${CXXFLAGS}"
 export CGO_LDFLAGS="${LDFLAGS}"
-export GOFLAGS="-buildmode=pie -ldflags=-linkmode=external -ldflags=-compressdwarf=false -modcacherw"
-export GOLDFLAGS="-linkmode=external -compressdwarf=false"
-export GOPATH="$(pwd)"
+export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
 
-make WHAT=cmd/kubectl KUBE_BUILD_PLATFORMS=linux/amd64 KUBE_VERBOSE=5
+go build -v \
+  -o kubectl \
+  -ldflags "\
+    -linkmode=external \
+    -compressdwarf=false \
+    -X k8s.io/client-go/pkg/version.gitVersion=v%{version} \
+    -X k8s.io/component-base/version.gitVersion=v%{version} \
+    -X k8s.io/client-go/pkg/version.gitMajor=1 \
+    -X k8s.io/component-base/version.gitMajor=1 \
+    -X k8s.io/client-go/pkg/version.gitMinor=35 \
+    -X k8s.io/component-base/version.gitMinor=35 \
+    -X k8s.io/client-go/pkg/version.gitTreeState=archive \
+    -X k8s.io/component-base/version.gitTreeState=archive \
+  " \
+  ./cmd/kubectl
 
 %install
-install -Dpm0755 _output/local/bin/linux/amd64/kubectl %{buildroot}%{_bindir}/kubectl
+install -Dpm0755 kubectl %{buildroot}%{_bindir}/kubectl
 install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
 mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
