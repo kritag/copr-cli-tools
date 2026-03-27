@@ -1,0 +1,18 @@
+#compdef sops
+
+autoload -U +X bashcompinit && bashcompinit
+
+_sops()
+{
+    local -a completions
+    local cword
+    cword=$((CURRENT - 1))
+
+    completions=(${(f)"$(
+        COMP_WORDS="${words[*]}" \
+        COMP_CWORD="${cword}" \
+        ${words[1]} --generate-bash-completion 2>/dev/null
+    )"})
+
+    compadd -- "${completions[@]}"
+}
