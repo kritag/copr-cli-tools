@@ -8,7 +8,9 @@ URL:            https://github.com/kubernetes-sigs/krew
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc
+BuildRequires:  git-core
 BuildRequires:  go
+BuildRequires:  kubectl
 Requires:       git-core
 Requires:       kubectl
 
