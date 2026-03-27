@@ -6,6 +6,8 @@ Summary:        Editor of encrypted files for YAML, JSON, ENV, INI, and binary f
 License:        MPL-2.0
 URL:            https://github.com/getsops/sops
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:        bash_autocomplete
+Source2:        zsh_autocomplete
 
 BuildRequires:  git-core
 BuildRequires:  go
@@ -41,9 +43,9 @@ go build \
 go test
 
 %install
-install -Dpm0644 %{_sourcedir}/bash_autocomplete \
+install -Dpm0644 %{SOURCE1} \
   %{buildroot}%{_datadir}/bash-completion/completions/sops
-install -Dpm0644 %{_sourcedir}/zsh_autocomplete \
+install -Dpm0644 %{SOURCE2} \
   %{buildroot}%{_datadir}/zsh/site-functions/_sops
 install -Dpm0755 sops %{buildroot}%{_bindir}/sops
 install -Dpm0644 README.rst %{buildroot}%{_docdir}/%{name}/README.rst
