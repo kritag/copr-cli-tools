@@ -45,10 +45,11 @@ file. The GitHub Actions workflow in
 manual dispatch to bump tracked package versions automatically. This includes
 `oc`, which is updated from the OpenShift mirror rather than GitHub releases.
 
-When a spec file changes on `main`, `.github/workflows/trigger-copr-rebuild.yml`
-can trigger a COPR rebuild through your project's webhook URL. Configure the
-`COPR_WEBHOOK_URL` GitHub Actions secret with the webhook from
-`Settings -> Webhooks` in your COPR project.
+To trigger COPR rebuilds automatically after version bumps are pushed, add the
+COPR GitHub webhook URL to your GitHub repository webhook settings. In COPR,
+copy the URL from `Settings -> Webhooks`, then in GitHub configure a repository
+webhook for push events using that URL. The scheduled version update workflow
+pushes spec changes to `main`, and GitHub will deliver the push webhook to COPR.
 
 Suggested COPR project name:
 
