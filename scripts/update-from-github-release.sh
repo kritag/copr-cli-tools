@@ -21,7 +21,15 @@ fi
 # shellcheck disable=SC1090
 source "${meta_path}"
 
-: "${UPSTREAM_REPO:?UPSTREAM_REPO is required}"
+if [[ -z "${UPSTREAM_REPO:-}" && -n "${OWNER:-}" && -n "${REPO:-}" ]]; then
+    UPSTREAM_REPO="${OWNER}/${REPO}"
+fi
+
+if [[ -z "${UPSTREAM_REPO:-}" ]]; then
+    echo "Skipping ${package}: no GitHub release metadata" >&2
+    exit 0
+fi
+
 tag_prefix="${UPSTREAM_TAG_PREFIX:-v}"
 
 api_url="https://api.github.com/repos/${UPSTREAM_REPO}/releases/latest"

@@ -43,9 +43,9 @@ go build \
 go test
 
 %install
-install -Dpm0644 %{SOURCE1} \
+install -Dpm0644 %{_sourcedir}/%{SOURCE1} \
   %{buildroot}%{_datadir}/bash-completion/completions/sops
-install -Dpm0644 %{SOURCE2} \
+install -Dpm0644 %{_sourcedir}/%{SOURCE2} \
   %{buildroot}%{_datadir}/zsh/site-functions/_sops
 install -Dpm0755 sops %{buildroot}%{_bindir}/sops
 install -Dpm0644 README.rst %{buildroot}%{_docdir}/%{name}/README.rst
@@ -57,5 +57,5 @@ install -Dpm0644 README.rst %{buildroot}%{_docdir}/%{name}/README.rst
 %doc %{_docdir}/%{name}/README.rst
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 3.12.2-1
+* Wed Mar 26 2025 Codex <codex@example.invalid> - 3.12.2-1
 - Initial package
