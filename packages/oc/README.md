@@ -5,13 +5,13 @@ the OpenShift mirror.
 
 ## Update workflow
 
-1. Check the latest version at https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/release.txt
-2. Run `scripts/bump-version.sh oc <version>` to update the spec.
-3. Commit and push.
-4. Trigger a COPR rebuild for the SCM package.
+1. Run `scripts/update-from-github-release.sh oc` to pull the latest version from
+   the OpenShift mirror.
+2. Commit and push.
+3. Trigger a COPR rebuild for the SCM package.
 
-> **Note:** `update-from-github-release.sh` does not work for this package —
-> `openshift/oc` has no proper GitHub releases. Versions must be bumped manually.
+> **Note:** `openshift/oc` has no proper GitHub releases. This repository updates
+> it from the OpenShift mirror instead.
 
 ## Notes
 

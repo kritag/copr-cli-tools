@@ -42,7 +42,13 @@ scripts/update-from-github-release.sh yq
 Packages that support release tracking have a `packages/<name>/upstream.env`
 file. The GitHub Actions workflow in
 `.github/workflows/update-package-versions.yml` can run on a schedule or by
-manual dispatch to bump tracked package versions automatically.
+manual dispatch to bump tracked package versions automatically. This includes
+`oc`, which is updated from the OpenShift mirror rather than GitHub releases.
+
+When a spec file changes on `main`, `.github/workflows/trigger-copr-rebuild.yml`
+can trigger a COPR rebuild through your project's webhook URL. Configure the
+`COPR_WEBHOOK_URL` GitHub Actions secret with the webhook from
+`Settings -> Webhooks` in your COPR project.
 
 Suggested COPR project name:
 

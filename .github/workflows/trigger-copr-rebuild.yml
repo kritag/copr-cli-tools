@@ -1,0 +1,26 @@
+name: Trigger COPR Rebuild
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/*/*.spec"
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger COPR webhook
+        env:
+          COPR_WEBHOOK_URL: ${{ secrets.COPR_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${COPR_WEBHOOK_URL:-}" ]]; then
+            echo "COPR_WEBHOOK_URL secret is required" >&2
+            exit 1
+          fi
+
+          curl -fsS -X POST "${COPR_WEBHOOK_URL}"

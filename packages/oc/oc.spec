@@ -37,5 +37,5 @@ mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
 %{_datadir}/zsh/site-functions/_oc
 
 %changelog
-* Fri Mar 27 2026 Codex <codex@example.invalid> - 4.21.7-1
+* Thu Mar 27 2025 Codex <codex@example.invalid> - 4.21.7-1
 - Initial package

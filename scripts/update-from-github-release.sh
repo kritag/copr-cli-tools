@@ -13,6 +13,31 @@ package="$1"
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 meta_path="${repo_root}/packages/${package}/upstream.env"
 
+update_from_openshift_mirror() {
+    local mirror_url latest_url latest_html version
+
+    mirror_url="${UPSTREAM_MIRROR_URL%/}"
+    latest_url="${mirror_url}/latest/"
+    latest_html="$(
+        curl -fsSL "${latest_url}"
+    )"
+
+    version="$(
+        printf '%s\n' "${latest_html}" \
+        | grep -oE 'openshift-client-linux-[0-9][^"/]*\.tar\.gz' \
+        | sed -E 's/^openshift-client-linux-//; s/\.tar\.gz$//' \
+        | sort -V \
+        | tail -n1
+    )"
+
+    if [[ -z "${version}" ]]; then
+        echo "No OpenShift client version found at ${latest_url}" >&2
+        exit 1
+    fi
+
+    "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
+}
+
 if [[ ! -f "${meta_path}" ]]; then
     echo "Missing upstream metadata: ${meta_path}" >&2
     exit 1
@@ -25,8 +50,13 @@ if [[ -z "${UPSTREAM_REPO:-}" && -n "${OWNER:-}" && -n "${REPO:-}" ]]; then
     UPSTREAM_REPO="${OWNER}/${REPO}"
 fi
 
+if [[ -n "${UPSTREAM_MIRROR_URL:-}" ]]; then
+    update_from_openshift_mirror
+    exit 0
+fi
+
 if [[ -z "${UPSTREAM_REPO:-}" ]]; then
-    echo "Skipping ${package}: no GitHub release metadata" >&2
+    echo "Skipping ${package}: no supported upstream release metadata" >&2
     exit 0
 fi
 
