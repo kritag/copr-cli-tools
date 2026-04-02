@@ -10,9 +10,7 @@ Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.
 BuildRequires:  cargo
 BuildRequires:  gcc
 BuildRequires:  git-core
-BuildRequires:  libgit2-devel
 BuildRequires:  pandoc
-Requires:       libgit2%{?_isa}
 Provides:       exa
 Obsoletes:      exa < %{version}-%{release}
 
@@ -27,7 +25,6 @@ icons, and tree views.
 cargo fetch --locked
 
 %build
-export LIBGIT2_NO_VENDOR=1
 cargo build --frozen --release
 mkdir -p target/man
 pandoc -s -t man man/eza.1.md -o target/man/eza.1
@@ -59,5 +56,5 @@ install -Dpm0644 target/man/eza_colors-explanation.5 %{buildroot}%{_mandir}/man5
 %{_mandir}/man5/eza_colors-explanation.5*
 
 %changelog
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.23.4-1
+* Thu Mar 26 2025 Codex <codex@example.invalid> - 0.23.4-1
 - Initial package
