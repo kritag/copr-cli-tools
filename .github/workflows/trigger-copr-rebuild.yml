@@ -18,9 +18,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ -z "${COPR_WEBHOOK_URL:-}" ]]; then
+          webhook_url="$(printf '%s' "${COPR_WEBHOOK_URL:-}" | tr -d '\r\n' | xargs)"
+
+          if [[ -z "${webhook_url}" ]]; then
             echo "COPR_WEBHOOK_URL secret is required" >&2
             exit 1
           fi
 
-          curl -fsS -X POST "${COPR_WEBHOOK_URL}"
+          if [[ ! "${webhook_url}" =~ ^https://copr\.fedorainfracloud\.org/webhooks/github/[0-9]+/[^/]+/?$ ]]; then
+            echo "COPR_WEBHOOK_URL is not a valid COPR GitHub webhook URL" >&2
+            exit 1
+          fi
+
+          curl -fsS -X POST "${webhook_url}"
