@@ -15,6 +15,7 @@ Current target packages:
 - oh-my-posh
 - sops
 - stern
+- flux
 - vivid
 - yq
 - zoxide
