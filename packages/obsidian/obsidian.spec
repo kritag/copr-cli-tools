@@ -2,7 +2,7 @@
 
 Name:           obsidian
 Version:        1.12.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Knowledge base application for Markdown notes
 
 License:        LicenseRef-Obsidian
@@ -39,7 +39,7 @@ tar -xJf data.tar.xz
 %install
 cp -a opt %{buildroot}/
 mkdir -p %{buildroot}%{_datadir}
-cp -a usr/share %{buildroot}%{_datadir}/
+cp -a usr/share/* %{buildroot}%{_datadir}/
 sed -i 's|/opt/Obsidian/obsidian|obsidian|g' \
   %{buildroot}%{_datadir}/applications/obsidian.desktop
 install -Dpm0755 %{SOURCE1} %{buildroot}%{_bindir}/obsidian
@@ -57,5 +57,8 @@ install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSES.chromium.html \
 %license %{_licensedir}/%{name}/LICENSES.chromium.html
 
 %changelog
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-2
+- Fix Debian data installation paths
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-1
 - Initial package
