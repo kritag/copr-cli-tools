@@ -19,8 +19,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: registry.fedoraproject.org/fedora:44
     defaults:
       run:
         shell: bash
@@ -33,7 +31,10 @@ jobs:
           path: repo
 
       - name: Install copr-cli
-        run: dnf -y install copr-cli git
+        run: |
+          set -euo pipefail
+          python3 -m pip install --user copr
+          echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
 
       - name: Verify checkout
         run: |
