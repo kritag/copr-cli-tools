@@ -32,7 +32,7 @@ jobs:
           INPUT_PACKAGE: ${{ github.event.inputs.package }}
         run: |
           set -euo pipefail
-          cd "${GITHUB_WORKSPACE}"
+          test -d "${GITHUB_WORKSPACE}"
           chmod +x scripts/bump-version.sh scripts/update-from-github-release.sh
 
           if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "all" ]]; then
@@ -48,27 +48,27 @@ jobs:
         id: commit
         run: |
           set -euo pipefail
-          cd "${GITHUB_WORKSPACE}"
+          test -d "${GITHUB_WORKSPACE}"
 
-          if git diff --quiet; then
+          if git -C "${GITHUB_WORKSPACE}" diff --quiet; then
             echo "No version changes detected"
             echo "changed=false" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
 
           packages="$(
-            git diff --name-only \
+            git -C "${GITHUB_WORKSPACE}" diff --name-only \
               | grep -E '^packages/[^/]+/[^/]+\.spec$' || true \
               | awk -F/ '{print $2}' \
               | sort -u \
               | paste -sd ' ' -
           )"
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages/*/*.spec
-          git commit -m "Update package versions"
-          git push
+          git -C "${GITHUB_WORKSPACE}" config user.name "github-actions[bot]"
+          git -C "${GITHUB_WORKSPACE}" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "${GITHUB_WORKSPACE}" add packages/*/*.spec
+          git -C "${GITHUB_WORKSPACE}" commit -m "Update package versions"
+          git -C "${GITHUB_WORKSPACE}" push
 
           echo "changed=true" >> "${GITHUB_OUTPUT}"
           echo "packages=${packages}" >> "${GITHUB_OUTPUT}"

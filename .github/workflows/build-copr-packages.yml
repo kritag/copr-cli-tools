@@ -53,22 +53,22 @@ jobs:
           AFTER_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          cd "${GITHUB_WORKSPACE}"
+          test -d "${GITHUB_WORKSPACE}"
 
           if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "changed" ]]; then
             packages="${INPUT_PACKAGE}"
           else
             before="${BEFORE_SHA:-}"
-            after="${AFTER_SHA:-$(git rev-parse HEAD)}"
+            after="${AFTER_SHA:-$(git -C "${GITHUB_WORKSPACE}" rev-parse HEAD)}"
 
             if [[ -n "${before}" && "${before}" != "0000000000000000000000000000000000000000" ]]; then
               changed_files="$(
-                git diff --name-only "${before}" "${after}" \
+                git -C "${GITHUB_WORKSPACE}" diff --name-only "${before}" "${after}" \
                   | grep -E '^packages/[^/]+/[^/]+\.spec$' || true
               )"
             else
               changed_files="$(
-                git show --name-only --pretty='' "${after}" \
+                git -C "${GITHUB_WORKSPACE}" show --name-only --pretty='' "${after}" \
                   | grep -E '^packages/[^/]+/[^/]+\.spec$' || true
               )"
             fi
