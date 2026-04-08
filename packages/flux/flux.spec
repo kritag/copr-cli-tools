@@ -1,6 +1,6 @@
 Name:           flux
 Version:        2.8.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Open and extensible continuous delivery solution for Kubernetes
 
 License:        Apache-2.0
@@ -22,6 +22,8 @@ delivery on Kubernetes.
 
 %prep
 %autosetup -n flux2-%{version}
+mkdir -p cmd/flux/manifests
+cp -a manifests/*.yaml cmd/flux/manifests/
 go mod download
 
 %build
@@ -59,5 +61,8 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-2
+- Stage embedded manifest YAMLs into cmd/flux/manifests before build
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-1
 - Initial package
