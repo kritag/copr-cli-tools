@@ -10,7 +10,7 @@ URL:            https://github.com/obsidianmd/obsidian-releases
 Source0:        %{url}/releases/download/v%{version}/obsidian_%{version}_amd64.deb
 Source1:        obsidian
 
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 BuildRequires:  binutils
 BuildRequires:  tar
 BuildRequires:  xz
