@@ -1,0 +1,92 @@
+name: Build COPR Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/*/*.spec"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to build, or "changed"
+        required: true
+        default: changed
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora:44
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install copr-cli
+        run: dnf -y install copr-cli git
+
+      - name: Configure copr-cli
+        env:
+          COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${COPR_CONFIG:-}" ]]; then
+            echo "COPR_CONFIG secret is required" >&2
+            exit 1
+          fi
+
+          mkdir -p ~/.config
+          printf '%s\n' "${COPR_CONFIG}" > ~/.config/copr
+          chmod 600 ~/.config/copr
+
+      - name: Resolve packages to build
+        id: packages
+        env:
+          INPUT_PACKAGE: ${{ github.event.inputs.package }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "changed" ]]; then
+            packages="${INPUT_PACKAGE}"
+          else
+            before="${BEFORE_SHA:-}"
+            if [[ -z "${before}" || "${before}" == "0000000000000000000000000000000000000000" ]]; then
+              before="$(git rev-parse HEAD^)"
+            fi
+
+            packages="$(
+              git diff --name-only "${before}" "${AFTER_SHA}" -- 'packages/*/*.spec' \
+                | awk -F/ '{print $2}' \
+                | sort -u \
+                | paste -sd ' ' -
+            )"
+          fi
+
+          echo "packages=${packages}" >> "${GITHUB_OUTPUT}"
+
+      - name: Trigger COPR builds
+        env:
+          PACKAGES: ${{ steps.packages.outputs.packages }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${PACKAGES:-}" ]]; then
+            echo "No package changes detected"
+            exit 0
+          fi
+
+          for package in ${PACKAGES}; do
+            copr-cli build-package bonvaffel/cli-tools \
+              --name "${package}" \
+              --enable-net on \
+              --background \
+              --nowait
+          done
