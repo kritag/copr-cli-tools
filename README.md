@@ -12,6 +12,7 @@ Current target packages:
 - helm
 - lazygit
 - lesspipe
+- obsidian
 - oh-my-posh
 - sops
 - stern
