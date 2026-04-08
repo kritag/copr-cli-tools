@@ -17,6 +17,7 @@ Current target packages:
 - stern
 - flux
 - kubeconform
+- bat-extras
 - vivid
 - yq
 - zoxide
