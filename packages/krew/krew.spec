@@ -1,6 +1,6 @@
 Name:           krew
 Version:        0.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Find and install kubectl plugins
 
 License:        Apache-2.0
@@ -10,7 +10,6 @@ Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.
 BuildRequires:  gcc
 BuildRequires:  git-core
 BuildRequires:  go
-BuildRequires:  kubectl
 Requires:       git-core
 Requires:       kubectl
 
@@ -59,5 +58,8 @@ cp -a docs %{buildroot}%{_docdir}/%{name}/
 %doc %{_docdir}/%{name}/docs
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 0.5.0-1
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 0.5.0-2
+- Drop unnecessary kubectl BuildRequires so the package can build before kubectl is present
+
+* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.5.0-1
 - Initial package

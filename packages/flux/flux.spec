@@ -1,51 +1,33 @@
+%global debug_package %{nil}
+
 Name:           flux
 Version:        2.8.5
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Open and extensible continuous delivery solution for Kubernetes
 
 License:        Apache-2.0
 URL:            https://github.com/fluxcd/flux2
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/releases/download/v%{version}/flux_%{version}_linux_amd64.tar.gz
+Source1:        https://raw.githubusercontent.com/fluxcd/flux2/v%{version}/LICENSE
 
-BuildRequires:  gcc
-BuildRequires:  git-core
-BuildRequires:  go
 BuildRequires:  bash-completion
 BuildRequires:  fish
-BuildRequires:  kustomize
 BuildRequires:  zsh
 
 ExclusiveArch:  x86_64
 
 %description
 Flux is a GitOps toolkit and command-line interface for managing continuous
-delivery on Kubernetes.
+delivery on Kubernetes. This package installs the upstream prebuilt CLI
+binary.
 
 %prep
-%autosetup -n flux2-%{version}
-./manifests/scripts/bundle.sh
-go mod download
-
-%build
-export GOTOOLCHAIN=local
-export CGO_ENABLED=1
-export CGO_CPPFLAGS="${CPPFLAGS}"
-export CGO_CFLAGS="${CFLAGS}"
-export CGO_CXXFLAGS="${CXXFLAGS}"
-export CGO_LDFLAGS="${LDFLAGS}"
-export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-
-go build -v \
-  -o flux \
-  -ldflags "\
-    -linkmode=external \
-    -compressdwarf=false \
-  " \
-  ./cmd/flux
+%autosetup -c -T
+tar -xzf %{SOURCE0}
 
 %install
 install -Dpm0755 flux %{buildroot}%{_bindir}/flux
-install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
 mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
 mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
@@ -61,6 +43,10 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-4
+- Repackage upstream release binary instead of building from source
+- Keep shell completion generation during install
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-3
 - Generate embedded manifests with upstream bundle script
 - Add kustomize build dependency

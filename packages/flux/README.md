@@ -1,6 +1,6 @@
 # flux
 
-This package builds `flux` from the upstream source release.
+This package installs the upstream prebuilt Linux amd64 `flux` release binary.
 
 ## Update workflow
 
@@ -11,5 +11,6 @@ This package builds `flux` from the upstream source release.
 ## Notes
 
 - This spec targets `x86_64`.
-- COPR builds need networking enabled because Go dependencies are resolved
-  during the build.
+- Shell completions are generated from the packaged binary during `%install`.
+- Using the upstream release binary avoids Fedora toolchain drift, including the
+  Go version mismatch seen on Fedora 43.
