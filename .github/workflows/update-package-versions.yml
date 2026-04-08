@@ -16,12 +16,16 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora:44
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Install tooling
+        run: dnf -y install copr-cli git jq
 
       - name: Update package versions
         env:
@@ -40,15 +44,63 @@ jobs:
           fi
 
       - name: Commit and push if changed
+        id: commit
         run: |
           set -euo pipefail
           if git diff --quiet; then
             echo "No version changes detected"
+            echo "changed=false" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
+
+          packages="$(
+            git diff --name-only -- 'packages/*/*.spec' \
+              | awk -F/ '{print $2}' \
+              | sort -u \
+              | paste -sd ' ' -
+          )"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add packages/*/*.spec
           git commit -m "Update package versions"
           git push
+
+          echo "changed=true" >> "${GITHUB_OUTPUT}"
+          echo "packages=${packages}" >> "${GITHUB_OUTPUT}"
+
+      - name: Configure copr-cli
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${COPR_CONFIG:-}" ]]; then
+            echo "COPR_CONFIG secret is required to submit COPR builds" >&2
+            exit 1
+          fi
+
+          mkdir -p ~/.config
+          printf '%s\n' "${COPR_CONFIG}" > ~/.config/copr
+          chmod 600 ~/.config/copr
+
+      - name: Trigger COPR builds
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          PACKAGES: ${{ steps.commit.outputs.packages }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${PACKAGES:-}" ]]; then
+            echo "No package changes detected for COPR submission"
+            exit 0
+          fi
+
+          for package in ${PACKAGES}; do
+            copr-cli build-package bonvaffel/cli-tools \
+              --name "${package}" \
+              --enable-net on \
+              --background \
+              --nowait
+          done

@@ -42,14 +42,16 @@ scripts/update-from-github-release.sh yq
 Packages that support release tracking have a `packages/<name>/upstream.env`
 file. The GitHub Actions workflow in
 `.github/workflows/update-package-versions.yml` can run on a schedule or by
-manual dispatch to bump tracked package versions automatically. This includes
-`oc`, which is updated from the OpenShift mirror rather than GitHub releases.
+manual dispatch to bump tracked package versions automatically, commit the
+updated spec files, and immediately submit COPR builds with
+`copr-cli build-package --enable-net on`. This includes `oc`, which is updated
+from the OpenShift mirror rather than GitHub releases.
 
-`.github/workflows/build-copr-packages.yml` triggers COPR builds for changed
-spec files with `copr-cli build-package --enable-net on`, which avoids relying
-on COPR's default package networking setting for webhook-triggered builds.
-Configure a `COPR_CONFIG` GitHub Actions secret containing your `copr-cli`
-config file contents so the workflow can authenticate to Copr.
+`.github/workflows/build-copr-packages.yml` remains available for manual
+rebuilds or direct pushes to `main`, but scheduled version bumps no longer rely
+on a second workflow being triggered by the updater's bot push. Configure a
+`COPR_CONFIG` GitHub Actions secret containing your `copr-cli` config file
+contents so either workflow can authenticate to Copr.
 
 Suggested COPR project name:
 

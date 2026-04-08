@@ -2,3 +2,4 @@ results/
 *.src.rpm
 *.rpm
 .codex/
+.codex
