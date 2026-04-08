@@ -1,1 +1,1 @@
-export LESSOPEN='|/usr/bin/lesspipe.sh %s'
+export LESSOPEN='|/usr/libexec/lesspipe/lesspipe.sh %s'
