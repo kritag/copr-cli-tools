@@ -29,6 +29,9 @@ jobs:
           fetch-depth: 0
           path: repo
 
+      - name: Install tooling
+        run: dnf -y install copr-cli git jq
+
       - name: Verify checkout
         run: |
           set -euo pipefail
@@ -36,9 +39,6 @@ jobs:
           ls -la
           git rev-parse --show-toplevel
           git status --short
-
-      - name: Install tooling
-        run: dnf -y install copr-cli git jq
 
       - name: Update package versions
         env:

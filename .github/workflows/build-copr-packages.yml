@@ -32,6 +32,9 @@ jobs:
           fetch-depth: 2
           path: repo
 
+      - name: Install copr-cli
+        run: dnf -y install copr-cli git
+
       - name: Verify checkout
         run: |
           set -euo pipefail
@@ -39,9 +42,6 @@ jobs:
           ls -la
           git rev-parse --show-toplevel
           git status --short
-
-      - name: Install copr-cli
-        run: dnf -y install copr-cli git
 
       - name: Configure copr-cli
         env:
