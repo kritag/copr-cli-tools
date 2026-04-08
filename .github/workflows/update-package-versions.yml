@@ -115,7 +115,7 @@ jobs:
           fi
 
           for package in ${PACKAGES}; do
-            copr-cli build-package bonvaffel/cli-tools \
+            copr build-package bonvaffel/cli-tools \
               --name "${package}" \
               --enable-net on \
               --background \
