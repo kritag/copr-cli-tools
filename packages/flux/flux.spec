@@ -1,6 +1,6 @@
 Name:           flux
 Version:        2.8.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Open and extensible continuous delivery solution for Kubernetes
 
 License:        Apache-2.0
@@ -12,6 +12,7 @@ BuildRequires:  git-core
 BuildRequires:  go
 BuildRequires:  bash-completion
 BuildRequires:  fish
+BuildRequires:  kustomize
 BuildRequires:  zsh
 
 ExclusiveArch:  x86_64
@@ -22,8 +23,7 @@ delivery on Kubernetes.
 
 %prep
 %autosetup -n flux2-%{version}
-mkdir -p cmd/flux/manifests
-cp -a manifests/*.yaml cmd/flux/manifests/
+./manifests/scripts/bundle.sh
 go mod download
 
 %build
@@ -61,6 +61,10 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-3
+- Generate embedded manifests with upstream bundle script
+- Add kustomize build dependency
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-2
 - Stage embedded manifest YAMLs into cmd/flux/manifests before build
 
