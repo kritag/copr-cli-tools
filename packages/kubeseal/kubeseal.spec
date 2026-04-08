@@ -1,44 +1,39 @@
+%global debug_package %{nil}
+
 Name:           kubeseal
 Version:        0.36.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        One-way encrypted Secrets for Kubernetes
 
 License:        Apache-2.0
 URL:            https://github.com/bitnami-labs/sealed-secrets
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/releases/download/v%{version}/kubeseal-%{version}-linux-amd64.tar.gz
+Source1:        https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/v%{version}/LICENSE
 
-BuildRequires:  go
 Requires:       glibc
 
 ExclusiveArch:  x86_64
 
 %description
 kubeseal is a client for creating one-way encrypted Kubernetes Secrets for use
-with the sealed-secrets controller.
+with the sealed-secrets controller. This package installs the upstream
+prebuilt CLI binary.
 
 %prep
-%autosetup -n sealed-secrets-%{version}
-
-%build
-cd cmd/kubeseal
-
-export CGO_CPPFLAGS="${CPPFLAGS}"
-export CGO_CFLAGS="%{build_cflags}"
-export CGO_CXXFLAGS="%{build_cxxflags}"
-export CGO_LDFLAGS="%{build_ldflags}"
-export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-
-go build -ldflags "-linkmode=external -X=main.VERSION=v%{version}" .
-
-%check
-go test ./cmd/kubeseal/... ./pkg/...
+%autosetup -c -T
+tar -xzf %{SOURCE0}
 
 %install
-install -Dpm0755 cmd/kubeseal/kubeseal %{buildroot}%{_bindir}/kubeseal
+install -Dpm0755 kubeseal %{buildroot}%{_bindir}/kubeseal
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 
 %files
 %{_bindir}/kubeseal
+%license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 0.36.1-1
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 0.36.1-2
+- Repackage upstream release binary instead of building from source
+
+* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.36.1-1
 - Initial package

@@ -1,9 +1,11 @@
 # kubeseal
 
-This package builds the `kubeseal` client from the upstream source release.
+This package installs the upstream prebuilt Linux amd64 `kubeseal` release
+binary.
 
 Notes:
 
 - Builds only the client binary, not the controller
-- Follows the Arch PKGBUILD build flags closely
+- Uses the upstream release artifact to avoid Go toolchain drift on older Fedora
+  chroots
 - Installs the `kubeseal` binary in `/usr/bin`

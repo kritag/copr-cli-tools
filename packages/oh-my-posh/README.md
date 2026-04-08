@@ -1,6 +1,7 @@
 # oh-my-posh
 
-This package builds `oh-my-posh` from the upstream source release.
+This package installs the upstream Linux `x86_64` release binary and ships the
+built-in theme files from the source archive.
 
 ## Update workflow
 
@@ -11,4 +12,5 @@ This package builds `oh-my-posh` from the upstream source release.
 ## Notes
 
 - This spec targets `x86_64`.
-- The package installs the `oh-my-posh` binary, bundled themes, and the license.
+- The package installs the upstream `oh-my-posh` binary, bundled themes, and the license.
+- Using the release binary avoids Fedora 43 build failures caused by the newer Go toolchain requirement.

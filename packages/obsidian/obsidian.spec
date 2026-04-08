@@ -2,7 +2,7 @@
 
 Name:           obsidian
 Version:        1.12.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Knowledge base application for Markdown notes
 
 License:        LicenseRef-Obsidian
@@ -53,10 +53,14 @@ install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSES.chromium.html \
 /opt/Obsidian
 %{_datadir}/applications/obsidian.desktop
 %{_datadir}/icons/hicolor/*/apps/obsidian.png
+%doc %{_docdir}/obsidian/changelog.gz
 %license %{_licensedir}/%{name}/LICENSE.electron.txt
 %license %{_licensedir}/%{name}/LICENSES.chromium.html
 
 %changelog
+* Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-3
+- Package the upstream Debian changelog installed under %%{_docdir}
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-2
 - Fix Debian data installation paths
 
