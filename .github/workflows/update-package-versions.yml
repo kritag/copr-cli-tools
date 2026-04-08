@@ -54,7 +54,8 @@ jobs:
           fi
 
           packages="$(
-            git diff --name-only -- 'packages/*/*.spec' \
+            git diff --name-only \
+              | grep -E '^packages/[^/]+/[^/]+\.spec$' || true \
               | awk -F/ '{print $2}' \
               | sort -u \
               | paste -sd ' ' -

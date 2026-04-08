@@ -58,13 +58,23 @@ jobs:
             packages="${INPUT_PACKAGE}"
           else
             before="${BEFORE_SHA:-}"
-            if [[ -z "${before}" || "${before}" == "0000000000000000000000000000000000000000" ]]; then
-              before="$(git rev-parse HEAD^)"
+            after="${AFTER_SHA:-$(git rev-parse HEAD)}"
+
+            if [[ -n "${before}" && "${before}" != "0000000000000000000000000000000000000000" ]]; then
+              changed_files="$(
+                git diff --name-only "${before}" "${after}" \
+                  | grep -E '^packages/[^/]+/[^/]+\.spec$' || true
+              )"
+            else
+              changed_files="$(
+                git show --name-only --pretty='' "${after}" \
+                  | grep -E '^packages/[^/]+/[^/]+\.spec$' || true
+              )"
             fi
 
             packages="$(
-              git diff --name-only "${before}" "${AFTER_SHA}" -- 'packages/*/*.spec' \
-                | awk -F/ '{print $2}' \
+              printf '%s\n' "${changed_files}" \
+                | awk -F/ 'NF >= 3 {print $2}' \
                 | sort -u \
                 | paste -sd ' ' -
             )"
