@@ -32,6 +32,7 @@ jobs:
           INPUT_PACKAGE: ${{ github.event.inputs.package }}
         run: |
           set -euo pipefail
+          cd "${GITHUB_WORKSPACE}"
           chmod +x scripts/bump-version.sh scripts/update-from-github-release.sh
 
           if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "all" ]]; then
@@ -47,6 +48,8 @@ jobs:
         id: commit
         run: |
           set -euo pipefail
+          cd "${GITHUB_WORKSPACE}"
+
           if git diff --quiet; then
             echo "No version changes detected"
             echo "changed=false" >> "${GITHUB_OUTPUT}"

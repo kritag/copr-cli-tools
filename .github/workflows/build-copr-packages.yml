@@ -53,6 +53,7 @@ jobs:
           AFTER_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
+          cd "${GITHUB_WORKSPACE}"
 
           if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "changed" ]]; then
             packages="${INPUT_PACKAGE}"
