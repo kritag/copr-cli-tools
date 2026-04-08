@@ -34,7 +34,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --user copr
-          echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
+          user_bin="$(python3 -m site --user-base)/bin"
+          echo "${user_bin}" >> "${GITHUB_PATH}"
 
       - name: Verify checkout
         run: |
@@ -58,6 +59,22 @@ jobs:
           mkdir -p ~/.config
           printf '%s\n' "${COPR_CONFIG}" > ~/.config/copr
           chmod 600 ~/.config/copr
+
+      - name: Resolve copr client
+        id: copr_client
+        run: |
+          set -euo pipefail
+          user_bin="$(python3 -m site --user-base)/bin"
+          for candidate in "${user_bin}/copr-cli" "${user_bin}/copr" "$(command -v copr-cli || true)" "$(command -v copr || true)"; do
+            if [[ -n "${candidate}" && -x "${candidate}" ]]; then
+              echo "bin=${candidate}" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
+          done
+
+          echo "COPR client binary not found" >&2
+          ls -la "${user_bin}" || true
+          exit 1
 
       - name: Resolve packages to build
         id: packages
@@ -99,6 +116,7 @@ jobs:
       - name: Trigger COPR builds
         env:
           PACKAGES: ${{ steps.packages.outputs.packages }}
+          COPR_BIN: ${{ steps.copr_client.outputs.bin }}
         run: |
           set -euo pipefail
 
@@ -108,7 +126,7 @@ jobs:
           fi
 
           for package in ${PACKAGES}; do
-            copr build-package bonvaffel/cli-tools \
+            "${COPR_BIN}" build-package bonvaffel/cli-tools \
               --name "${package}" \
               --enable-net on \
               --background \
