@@ -16,6 +16,7 @@ Current target packages:
 - sops
 - stern
 - flux
+- kubeconform
 - vivid
 - yq
 - zoxide
