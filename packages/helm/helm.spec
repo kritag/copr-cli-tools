@@ -1,5 +1,5 @@
 Name:           helm
-Version:        4.1.3
+Version:        4.1.4
 Release:        1%{?dist}
 Summary:        Kubernetes package manager
 
