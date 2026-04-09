@@ -1,6 +1,6 @@
 Name:           krew
 Version:        0.5.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Find and install kubectl plugins
 
 License:        Apache-2.0
@@ -43,7 +43,18 @@ go build -v \
 mv krew kubectl-krew
 
 %check
-KREW_BINARY="$PWD/kubectl-krew" go test ./...
+mkdir -p .test-bin
+cat > .test-bin/kubectl <<'EOF'
+#!/bin/sh
+if [ "$1" = "krew" ]; then
+  shift
+  exec "$(dirname "$0")/../kubectl-krew" "$@"
+fi
+echo "unsupported test invocation: kubectl $*" >&2
+exit 1
+EOF
+chmod 0755 .test-bin/kubectl
+PATH="$PWD/.test-bin:$PATH" KREW_BINARY="$PWD/kubectl-krew" go test ./...
 
 %install
 install -Dpm0755 kubectl-krew %{buildroot}%{_bindir}/kubectl-krew
@@ -58,6 +69,9 @@ cp -a docs %{buildroot}%{_docdir}/%{name}/
 %doc %{_docdir}/%{name}/docs
 
 %changelog
+* Thu Apr 09 2026 Codex <codex@example.invalid> - 0.5.0-3
+- Provide a local kubectl shim during tests so integration tests can invoke kubectl krew
+
 * Wed Apr 08 2026 Codex <codex@example.invalid> - 0.5.0-2
 - Drop unnecessary kubectl BuildRequires so the package can build before kubectl is present
 
