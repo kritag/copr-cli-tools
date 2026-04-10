@@ -1,5 +1,5 @@
 Name:           vivid
-Version:        0.11.0
+Version:        0.11.1
 Release:        1%{?dist}
 Summary:        LS_COLORS manager with multiple themes
 
