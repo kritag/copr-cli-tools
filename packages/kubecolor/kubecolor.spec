@@ -19,6 +19,7 @@ kubecolor colorizes kubectl output to make Kubernetes resources easier to scan.
 
 %prep
 %autosetup -n %{name}-%{version}
+export GOTOOLCHAIN=auto
 go mod download
 
 %build
@@ -28,6 +29,7 @@ export CGO_CXXFLAGS="%{build_cxxflags}"
 export CGO_LDFLAGS="%{build_ldflags}"
 export CGO_ENABLED=1
 export GOFLAGS="-buildmode=pie -mod=readonly -modcacherw -trimpath"
+export GOTOOLCHAIN=auto
 
 go build \
   -ldflags "-compressdwarf=false -linkmode external -extldflags \"%{build_ldflags}\"" \
@@ -44,5 +46,6 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.5.3-1
-- Initial package
+* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.6.0-1
+- Update to 0.6.0
+- Allow automatic Go toolchain bootstrap for Fedora 43
