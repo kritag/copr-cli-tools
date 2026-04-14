@@ -18,6 +18,7 @@ Current target packages:
 - sops
 - slack
 - stern
+- terraform
 - flux
 - flavours
 - kubeconform
