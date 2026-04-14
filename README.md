@@ -9,6 +9,7 @@ Current target packages:
 - krew
 - kubectx
 - kubeseal
+- kubecolor
 - helm
 - lazygit
 - lucidglyph
