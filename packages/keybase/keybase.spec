@@ -3,7 +3,7 @@
 
 Name:           keybase
 Version:        6.6.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Meta package for Keybase CLI, KBFS, and GUI
 
 License:        BSD-3-Clause
@@ -87,17 +87,17 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 %{_bindir}/keybase-redirector
 %config(noreplace) %{_sysconfdir}/chromium/native-messaging-hosts/io.keybase.kbnm.json
 %config(noreplace) %{_sysconfdir}/opt/chrome/native-messaging-hosts/io.keybase.kbnm.json
-%{_userunitdir}/keybase-redirector.service
-%{_userunitdir}/keybase.service
+/usr/lib/systemd/user/keybase-redirector.service
+/usr/lib/systemd/user/keybase.service
 
 %files -n kbfs
 %{_bindir}/git-remote-keybase
 %{_bindir}/kbfsfuse
-%{_userunitdir}/kbfs.service
+/usr/lib/systemd/user/kbfs.service
 
 %files -n keybase-gui
 %{_bindir}/run_keybase
-%{_userunitdir}/keybase.gui.service
+/usr/lib/systemd/user/keybase.gui.service
 %{_datadir}/applications/keybase.desktop
 %doc %{_docdir}/%{name}/changelog.Debian.gz
 %{_datadir}/icons/hicolor/*/apps/keybase.png
@@ -110,3 +110,7 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 * Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-1
 - Initial split package (meta + cli + kbfs + gui)
 - Source from official upstream Debian artifact
+
+* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-2
+- Replace %{_userunitdir} with explicit systemd user unit paths
+- Fix COPR build failure in minimal Fedora buildroot
