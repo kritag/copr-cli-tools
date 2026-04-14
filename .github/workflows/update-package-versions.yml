@@ -104,6 +104,7 @@ jobs:
         if: steps.commit.outputs.changed == 'true'
         env:
           PACKAGES: ${{ steps.commit.outputs.packages }}
+          REPO_CLONE_URL: https://github.com/${{ github.repository }}.git
         run: |
           set -euo pipefail
 
@@ -133,6 +134,21 @@ jobs:
               bash -lc "
                 set -euo pipefail
                 dnf -y install copr-cli >/dev/null
+                if ! copr-cli get-package bonvaffel/cli-tools --name '${package}' >/dev/null 2>&1; then
+                  copr-cli add-package-scm bonvaffel/cli-tools \
+                    --name '${package}' \
+                    --clone-url '${REPO_CLONE_URL}' \
+                    --subdir 'packages/${package}' \
+                    --spec '${package}.spec' \
+                    --method make_srpm
+                else
+                  copr-cli edit-package-scm bonvaffel/cli-tools \
+                    --name '${package}' \
+                    --clone-url '${REPO_CLONE_URL}' \
+                    --subdir 'packages/${package}' \
+                    --spec '${package}.spec' \
+                    --method make_srpm
+                fi
                 copr-cli build-package bonvaffel/cli-tools \
                   --name '${package}' \
                   --enable-net on \
