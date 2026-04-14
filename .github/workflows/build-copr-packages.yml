@@ -115,6 +115,15 @@ jobs:
 
           cp ~/.config/copr ../copr.conf
 
+          docker run --rm \
+            -v "${PWD}/../copr.conf:/root/.config/copr:ro" \
+            registry.fedoraproject.org/fedora:44 \
+            bash -lc "
+              set -euo pipefail
+              dnf -y install copr-cli >/dev/null
+              copr-cli modify bonvaffel/cli-tools --enable-net on
+            "
+
           for package in ${PACKAGES}; do
             package="$(printf '%s\n' "${package}" | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#')"
             docker run --rm \

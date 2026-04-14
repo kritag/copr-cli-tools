@@ -57,6 +57,13 @@ on a second workflow being triggered by the updater's bot push. Configure a
 `COPR_CONFIG` GitHub Actions secret containing your `copr-cli` config file
 contents so either workflow can authenticate to Copr.
 
+To enforce network-enabled builds for all packages in the project (including
+manual rebuilds in Copr), set the project default:
+
+```bash
+copr-cli modify bonvaffel/cli-tools --enable-net on
+```
+
 Suggested COPR project name:
 
 - `yourname/cli-tools`
