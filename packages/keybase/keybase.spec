@@ -3,7 +3,7 @@
 
 Name:           keybase
 Version:        6.6.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Meta package for Keybase CLI, KBFS, and GUI
 
 License:        BSD-3-Clause
@@ -87,7 +87,7 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 %{_bindir}/keybase-redirector
 %config(noreplace) %{_sysconfdir}/chromium/native-messaging-hosts/io.keybase.kbnm.json
 %config(noreplace) %{_sysconfdir}/opt/chrome/native-messaging-hosts/io.keybase.kbnm.json
-%{_libdir}/mozilla/native-messaging-hosts/io.keybase.kbnm.json
+/usr/lib/mozilla/native-messaging-hosts/io.keybase.kbnm.json
 /usr/share/keyrings/keybase.asc
 /usr/lib/systemd/user/keybase-redirector.service
 /usr/lib/systemd/user/keybase.service
@@ -119,3 +119,6 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 * Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-3
 - Include mozilla native messaging host and upstream keyring file
 - Remove duplicate LICENSE file listing warning
+
+* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-4
+- Fix mozilla native messaging host path (`/usr/lib`, not `%{_libdir}`)
