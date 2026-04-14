@@ -15,6 +15,7 @@ Current target packages:
 - obsidian
 - oh-my-posh
 - sops
+- slack
 - stern
 - flux
 - kubeconform

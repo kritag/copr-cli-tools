@@ -38,6 +38,31 @@ update_from_openshift_mirror() {
     "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
 }
 
+update_from_release_notes() {
+    local notes_url pattern notes_html version
+
+    notes_url="${UPSTREAM_RELEASE_NOTES_URL}"
+    pattern="${UPSTREAM_RELEASE_NOTES_PATTERN:-[0-9]+\\.[0-9]+\\.[0-9]+}"
+    notes_html="$(
+        curl -fsSL "${notes_url}"
+    )"
+
+    version="$(
+        printf '%s\n' "${notes_html}" \
+        | grep -oE "${pattern}" \
+        | sed -E 's/^[^0-9]*//; s/[^0-9.].*$//' \
+        | sort -V \
+        | tail -n1
+    )"
+
+    if [[ -z "${version}" ]]; then
+        echo "No version match found at ${notes_url} using pattern ${pattern}" >&2
+        exit 1
+    fi
+
+    "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
+}
+
 if [[ ! -f "${meta_path}" ]]; then
     echo "Missing upstream metadata: ${meta_path}" >&2
     exit 1
@@ -52,6 +77,11 @@ fi
 
 if [[ -n "${UPSTREAM_MIRROR_URL:-}" ]]; then
     update_from_openshift_mirror
+    exit 0
+fi
+
+if [[ -n "${UPSTREAM_RELEASE_NOTES_URL:-}" ]]; then
+    update_from_release_notes
     exit 0
 fi
 
