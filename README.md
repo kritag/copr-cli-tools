@@ -11,6 +11,7 @@ Current target packages:
 - kubeseal
 - helm
 - lazygit
+- lucidglyph
 - lesspipe
 - obsidian
 - oh-my-posh
