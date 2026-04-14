@@ -10,6 +10,7 @@ Current target packages:
 - kubectx
 - kubeseal
 - kubecolor
+- keybase
 - helm
 - lazygit
 - lucidglyph

@@ -1,0 +1,6 @@
+This is a meta package.
+
+Installing `keybase` installs:
+- keybase-cli
+- kbfs
+- keybase-gui

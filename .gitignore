@@ -1,5 +1,7 @@
 results/
 *.src.rpm
 *.rpm
+packages/*/.copr-sources/
+packages/*/.copr-rpmbuild/
 .codex/
 .codex
