@@ -18,6 +18,7 @@ Current target packages:
 - slack
 - stern
 - flux
+- flavours
 - kubeconform
 - bat-extras
 - vivid
