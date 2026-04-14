@@ -1,5 +1,5 @@
 Name:           kubecolor
-Version:        0.5.3
+Version:        0.6.0
 Release:        1%{?dist}
 Summary:        Colorize your kubectl output
 
