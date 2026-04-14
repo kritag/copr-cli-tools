@@ -7,7 +7,7 @@ Summary:        Kubernetes package manager
 
 License:        Apache-2.0
 URL:            https://github.com/helm/helm
-Source0:        %{url}/releases/download/v%{version}/helm-v%{version}-linux-amd64.tar.gz
+Source0:        https://get.helm.sh/helm-v%{version}-linux-amd64.tar.gz
 Source1:        https://raw.githubusercontent.com/helm/helm/v%{version}/LICENSE
 
 BuildRequires:  bash-completion
