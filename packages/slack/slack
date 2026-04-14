@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+set -euo pipefail
+
+export LD_LIBRARY_PATH="/usr/lib/slack${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+exec /usr/lib/slack/slack "$@"

@@ -3,12 +3,13 @@
 
 Name:           slack
 Version:        4.49.81
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Team communication app for Linux
 
 License:        LicenseRef-Slack
 URL:            https://slack.com/release-notes/linux
 Source0:        https://downloads.slack-edge.com/desktop-releases/linux/x64/%{version}/slack-desktop-%{version}-amd64.deb
+Source1:        slack
 
 ExclusiveArch:  x86_64
 BuildRequires:  binutils
@@ -44,13 +45,15 @@ else
 fi
 
 %install
-install -Dpm0755 usr/bin/slack %{buildroot}%{_bindir}/slack
+install -Dpm0755 %{SOURCE1} %{buildroot}%{_bindir}/slack
 mkdir -p %{buildroot}%{_prefix}/lib
 cp -a usr/lib/slack %{buildroot}%{_prefix}/lib/
+rm -rf %{buildroot}%{_prefix}/lib/slack/src
 install -Dpm0644 usr/share/applications/slack.desktop \
   %{buildroot}%{_datadir}/applications/slack.desktop
 install -Dpm0644 usr/share/pixmaps/slack.png \
   %{buildroot}%{_datadir}/pixmaps/slack.png
+sed -i 's|^Icon=.*|Icon=slack|' %{buildroot}%{_datadir}/applications/slack.desktop
 install -Dpm0644 usr/lib/slack/LICENSE \
   %{buildroot}%{_licensedir}/%{name}/LICENSE
 
@@ -62,5 +65,10 @@ install -Dpm0644 usr/lib/slack/LICENSE \
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Tue Apr 14 2026 Codex <codex@example.invalid> - 4.49.81-2
+- Normalize desktop icon entry to Icon=slack
+- Prune bundled source payload under /usr/lib/slack/src
+- Keep wrapper launcher so bundled shared libraries resolve correctly
+
 * Tue Apr 14 2026 Codex <codex@example.invalid> - 4.49.81-1
 - Initial package
