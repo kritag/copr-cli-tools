@@ -1,6 +1,6 @@
 # helm
 
-This package builds `helm` from the upstream source archive.
+This package installs the upstream Linux `x86_64` release binary.
 
 ## Update workflow
 
@@ -12,5 +12,5 @@ This package builds `helm` from the upstream source archive.
 ## Notes
 
 - This spec currently targets `x86_64`.
-- COPR builds need networking enabled because Go modules are vendored during the
-  build.
+- Shell completions are generated during install from the packaged binary.
+- Using the release binary avoids chroot toolchain drift during COPR builds.

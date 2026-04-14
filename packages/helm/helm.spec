@@ -1,44 +1,32 @@
+%global debug_package %{nil}
+
 Name:           helm
 Version:        4.1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Kubernetes package manager
 
 License:        Apache-2.0
 URL:            https://github.com/helm/helm
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/releases/download/v%{version}/helm-v%{version}-linux-amd64.tar.gz
+Source1:        https://raw.githubusercontent.com/helm/helm/v%{version}/LICENSE
 
-BuildRequires:  gcc
-BuildRequires:  git-core
-BuildRequires:  go
+BuildRequires:  bash-completion
+BuildRequires:  fish
+BuildRequires:  zsh
 
+Requires:       glibc
 ExclusiveArch:  x86_64
 
 %description
 Helm is a package manager for Kubernetes.
 
 %prep
-%autosetup -n %{name}-%{version}
-GOFLAGS="-mod=readonly" go mod vendor -v
-
-%build
-export CGO_LDFLAGS="%{build_ldflags}"
-export CGO_CFLAGS="%{build_cflags}"
-export CGO_CXXFLAGS="%{build_cxxflags}"
-export CGO_CPPFLAGS="${CPPFLAGS}"
-export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
-
-go build -v \
-  -ldflags "\
-    -compressdwarf=false \
-    -linkmode=external \
-    -X helm.sh/helm/v4/internal/version.version=v%{version} \
-    -X helm.sh/helm/v4/internal/version.gitCommit=v%{version} \
-  " \
-  ./cmd/helm
+%autosetup -c -T
+tar -xzf %{SOURCE0}
 
 %install
-install -Dpm0755 helm %{buildroot}%{_bindir}/helm
-install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
+install -Dpm0755 linux-amd64/helm %{buildroot}%{_bindir}/helm
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
 mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
 mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
@@ -54,5 +42,9 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 4.1.3-1
+* Tue Apr 14 2026 Codex <codex@example.invalid> - 4.1.4-2
+- Repackage upstream release binary instead of building from source
+- Keep shell completion generation during install
+
+* Thu Mar 26 2026 Codex <codex@example.invalid> - 4.1.3-1
 - Initial package

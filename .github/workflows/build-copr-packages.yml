@@ -68,7 +68,14 @@ jobs:
           set -euo pipefail
 
           if [[ -n "${INPUT_PACKAGE:-}" && "${INPUT_PACKAGE}" != "changed" ]]; then
-            packages="${INPUT_PACKAGE}"
+            packages="$(
+              printf '%s\n' "${INPUT_PACKAGE}" \
+                | tr ', ' '\n\n' \
+                | sed '/^$/d' \
+                | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#' \
+                | sort -u \
+                | paste -sd ' ' -
+            )"
           else
             before="${BEFORE_SHA:-}"
             after="${AFTER_SHA:-$(git rev-parse HEAD)}"
@@ -109,6 +116,7 @@ jobs:
           cp ~/.config/copr ../copr.conf
 
           for package in ${PACKAGES}; do
+            package="$(printf '%s\n' "${package}" | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#')"
             docker run --rm \
               -v "${PWD}:/work:ro" \
               -v "${PWD}/../copr.conf:/root/.config/copr:ro" \

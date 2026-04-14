@@ -115,6 +115,7 @@ jobs:
           cp ~/.config/copr ../copr.conf
 
           for package in ${PACKAGES}; do
+            package="$(printf '%s\n' "${package}" | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#')"
             docker run --rm \
               -v "${PWD}:/work:ro" \
               -v "${PWD}/../copr.conf:/root/.config/copr:ro" \

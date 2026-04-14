@@ -1,6 +1,6 @@
 # vivid
 
-This package builds `vivid` from the upstream source archive.
+This package installs the upstream Linux `x86_64` release binary.
 
 ## Update workflow
 
@@ -12,4 +12,4 @@ This package builds `vivid` from the upstream source archive.
 
 - Themes and file-type config are embedded in the binary via `rust-embed`; no data directory is installed.
 - This spec currently targets `x86_64`.
-- COPR builds need networking enabled because Cargo dependencies are fetched during the build.
+- Using the release binary avoids Rust toolchain drift during COPR builds.
