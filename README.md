@@ -25,6 +25,7 @@ Current target packages:
 - flavours
 - kubeconform
 - bat-extras
+- bibata-cursor-theme
 - vivid
 - yq
 - zoxide
