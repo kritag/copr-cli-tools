@@ -1,5 +1,5 @@
 Name:           kubectl
-Version:        1.35.4
+Version:        1.36.0
 Release:        1%{?dist}
 Summary:        Kubernetes command-line tool
 
