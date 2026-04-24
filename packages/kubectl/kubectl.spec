@@ -20,6 +20,9 @@ kubectl is the command-line client for Kubernetes clusters.
 
 %build
 export GOTOOLCHAIN=local
+# Fedora 43 ships Go 1.25, but Kubernetes 1.36's go.work requires 1.26.
+# Disable workspace mode so Go uses module mode from the main go.mod instead.
+export GOWORK=off
 export CGO_ENABLED=1
 export CGO_CPPFLAGS="${CPPFLAGS}"
 export CGO_CFLAGS="${CFLAGS}"
@@ -61,5 +64,8 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 1.35.3-1
+* Fri Apr 24 2026 Codex <codex@example.invalid> - 1.35.4-1
+- Disable Go workspace mode during build for Fedora 43 compatibility
+
+* Thu Mar 26 2026 Codex <codex@example.invalid> - 1.35.3-1
 - Build kubectl from the Kubernetes source tree
