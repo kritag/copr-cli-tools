@@ -19,10 +19,9 @@ kubectl is the command-line client for Kubernetes clusters.
 %autosetup -n kubernetes-%{version}
 
 %build
-export GOTOOLCHAIN=local
-# Fedora 43 ships Go 1.25, but Kubernetes 1.36's go.work requires 1.26.
-# Disable workspace mode so Go uses module mode from the main go.mod instead.
-export GOWORK=off
+# Allow Fedora 43 (Go 1.25) to resolve a newer Go toolchain required by
+# Kubernetes 1.36 while still using local toolchains when already sufficient.
+export GOTOOLCHAIN=auto
 export CGO_ENABLED=1
 export CGO_CPPFLAGS="${CPPFLAGS}"
 export CGO_CFLAGS="${CFLAGS}"
@@ -39,8 +38,8 @@ go build -v \
     -X k8s.io/component-base/version.gitVersion=v%{version} \
     -X k8s.io/client-go/pkg/version.gitMajor=1 \
     -X k8s.io/component-base/version.gitMajor=1 \
-    -X k8s.io/client-go/pkg/version.gitMinor=35 \
-    -X k8s.io/component-base/version.gitMinor=35 \
+    -X k8s.io/client-go/pkg/version.gitMinor=36 \
+    -X k8s.io/component-base/version.gitMinor=36 \
     -X k8s.io/client-go/pkg/version.gitTreeState=archive \
     -X k8s.io/component-base/version.gitTreeState=archive \
   " \
@@ -64,6 +63,10 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Fri Apr 24 2026 Codex <codex@example.invalid> - 1.36.0-1
+- Use GOTOOLCHAIN=auto and keep Go workspace mode for kubectl 1.36 builds
+- Align embedded gitMinor metadata with v1.36
+
 * Fri Apr 24 2026 Codex <codex@example.invalid> - 1.35.4-1
 - Disable Go workspace mode during build for Fedora 43 compatibility
 
