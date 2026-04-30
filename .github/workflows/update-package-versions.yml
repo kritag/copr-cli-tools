@@ -124,9 +124,10 @@ jobs:
               copr-cli modify bonvaffel/cli-tools --enable-net on
             "
 
+          failed_packages=()
           for package in ${PACKAGES}; do
             package="$(printf '%s\n' "${package}" | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#')"
-            docker run --rm \
+            if ! docker run --rm \
               -v "${PWD}:/work:ro" \
               -v "${PWD}/../copr.conf:/root/.config/copr:ro" \
               -w /work \
@@ -154,5 +155,15 @@ jobs:
                   --enable-net on \
                   --background \
                   --nowait
-              "
+              "; then
+              echo "Failed to submit COPR build for ${package}" >&2
+              failed_packages+=("${package}")
+            fi
           done
+
+          if [[ ${#failed_packages[@]} -gt 0 ]]; then
+            echo "COPR submissions failed for: ${failed_packages[*]}" >&2
+            exit 1
+          else
+            echo "COPR submissions succeeded for all packages: ${PACKAGES}"
+          fi
