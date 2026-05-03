@@ -1,5 +1,5 @@
 Name:           stern
-Version:        1.33.1
+Version:        1.34.0
 Release:        1%{?dist}
 Summary:        Multi pod and container log tailing for Kubernetes
 
