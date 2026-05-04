@@ -17,6 +17,7 @@ stern tails logs from multiple Kubernetes pods and containers.
 
 %prep
 %autosetup -n %{name}-%{version}
+export GOTOOLCHAIN=auto
 GOFLAGS="-mod=readonly" go mod vendor -v
 
 %build
@@ -24,6 +25,7 @@ export CGO_CPPFLAGS="${CPPFLAGS}"
 export CGO_CFLAGS="%{build_cflags}"
 export CGO_CXXFLAGS="%{build_cxxflags}"
 export CGO_LDFLAGS="%{build_ldflags}"
+export GOTOOLCHAIN=auto
 export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
 export GOPATH="$(pwd)"
 
@@ -36,6 +38,7 @@ go build -v -x \
   -o ./out/%{name}
 
 %check
+export GOTOOLCHAIN=auto
 go test -v ./...
 
 %install
@@ -61,5 +64,5 @@ install -Dpm0644 *.md -t %{buildroot}%{_docdir}/%{name}
 %doc %{_docdir}/%{name}
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 1.33.1-1
+* Thu Mar 26 2026 Codex <codex@example.invalid> - 1.33.1-1
 - Initial package
