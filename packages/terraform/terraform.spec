@@ -26,6 +26,7 @@ code idempotently.
 
 %prep
 %autosetup -n %{name}-%{version}
+export GOTOOLCHAIN=auto
 go mod download
 
 %build
@@ -35,6 +36,7 @@ export CGO_CXXFLAGS="%{build_cxxflags}"
 export CGO_LDFLAGS="%{build_ldflags}"
 export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
 export GOPROXY=off
+export GOTOOLCHAIN=auto
 
 go build \
   -o terraform-binary \
