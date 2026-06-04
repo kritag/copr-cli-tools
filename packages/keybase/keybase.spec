@@ -2,7 +2,7 @@
 %global keybase_build 20260408161357.70cbb6ec7c
 
 Name:           keybase
-Version:        6.6.2
+Version:        6.6.3
 Release:        4%{?dist}
 Summary:        Meta package for Keybase CLI, KBFS, and GUI
 
