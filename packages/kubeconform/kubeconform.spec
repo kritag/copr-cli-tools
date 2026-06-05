@@ -1,5 +1,5 @@
 Name:           kubeconform
-Version:        0.7.0
+Version:        0.8.0
 Release:        2%{?dist}
 Summary:        Fast Kubernetes manifests validator with Custom Resource support
 
