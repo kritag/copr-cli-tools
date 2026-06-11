@@ -1,9 +1,9 @@
 %global debug_package %{nil}
-%global keybase_build 20260408161357.70cbb6ec7c
+%global keybase_build 20260603142455.f60f2ff97e
 
 Name:           keybase
 Version:        6.6.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Meta package for Keybase CLI, KBFS, and GUI
 
 License:        BSD-3-Clause
@@ -108,6 +108,9 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 /opt/keybase
 
 %changelog
+* Wed Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 6.6.3-5
+- Update upstream build to 20260603142455.f60f2ff97e (previous build no longer available)
+
 * Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-1
 - Initial split package (meta + cli + kbfs + gui)
 - Source from official upstream Debian artifact
