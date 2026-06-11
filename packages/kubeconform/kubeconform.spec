@@ -1,6 +1,14 @@
+%if 0%{?fedora} >= 44
+%global kube_version 0.8.0
+%global kube_release 1
+%else
+%global kube_version 0.7.0
+%global kube_release 4
+%endif
+
 Name:           kubeconform
-Version:        0.7.0
-Release:        3%{?dist}
+Version:        %{kube_version}
+Release:        %{kube_release}%{?dist}
 Summary:        Fast Kubernetes manifests validator with Custom Resource support
 
 %global debug_package %{nil}
@@ -47,6 +55,10 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Thu Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 0.8.0-1
+- Update to 0.8.0 on Fedora 44+ (requires Go >= 1.26, available in Fedora 44)
+- Pin to 0.7.0 on Fedora 43 (Go 1.25 only)
+
 * Thu Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 0.7.0-3
 - Revert to 0.7.0; 0.8.0 requires Go >= 1.26, unavailable in Fedora 43
 
