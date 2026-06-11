@@ -1,5 +1,5 @@
 Name:           lesspipe
-Version:        2.26
+Version:        2.27
 Release:        2%{?dist}
 Summary:        Input filter for the pager less
 
