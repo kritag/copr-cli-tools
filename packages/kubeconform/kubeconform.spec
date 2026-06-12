@@ -7,7 +7,7 @@
 %endif
 
 Name:           kubeconform
-Version:        0.8.0
+Version:        %{kube_version}
 Release:        %{kube_release}%{?dist}
 Summary:        Fast Kubernetes manifests validator with Custom Resource support
 
