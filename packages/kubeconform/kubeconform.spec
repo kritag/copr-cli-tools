@@ -1,14 +1,6 @@
-%if 0%{?fedora} >= 44
-%global kube_version 0.8.0
-%global kube_release 1
-%else
-%global kube_version 0.7.0
-%global kube_release 4
-%endif
-
 Name:           kubeconform
 Version:        0.8.0
-Release:        %{kube_release}%{?dist}
+Release:        5%{?dist}
 Summary:        Fast Kubernetes manifests validator with Custom Resource support
 
 %global debug_package %{nil}
@@ -29,6 +21,9 @@ supports Custom Resources.
 
 %prep
 %autosetup -n %{name}-%{version}
+%if 0%{?fedora} < 44
+go mod edit -go=1.25
+%endif
 go mod download
 
 %build
@@ -55,9 +50,12 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
+* Fri Jun 12 2026 kritag <kristian.tagesen@tieto.com> - 0.8.0-5
+- Build 0.8.0 on all Fedora releases; patch go.mod to go 1.25 on Fedora < 44
+  to work around GOTOOLCHAIN=local with Go 1.25
+
 * Thu Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 0.8.0-1
-- Update to 0.8.0 on Fedora 44+ (requires Go >= 1.26, available in Fedora 44)
-- Pin to 0.7.0 on Fedora 43 (Go 1.25 only)
+- Update to 0.8.0; Fedora 44+ only due to Go >= 1.26 requirement
 
 * Thu Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 0.7.0-3
 - Revert to 0.7.0; 0.8.0 requires Go >= 1.26, unavailable in Fedora 43
