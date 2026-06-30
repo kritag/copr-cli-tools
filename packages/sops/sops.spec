@@ -1,5 +1,5 @@
 Name:           sops
-Version:        3.13.1
+Version:        3.13.2
 Release:        2%{?dist}
 Summary:        Editor of encrypted files for YAML, JSON, ENV, INI, and binary formats
 
