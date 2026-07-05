@@ -1,5 +1,5 @@
 Name:           zoxide
-Version:        0.9.9
+Version:        0.10.0
 Release:        1%{?dist}
 Summary:        Smarter cd command for the shell
 
