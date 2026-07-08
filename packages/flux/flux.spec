@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           flux
-Version:        2.9.0
+Version:        2.9.1
 Release:        4%{?dist}
 Summary:        Open and extensible continuous delivery solution for Kubernetes
 
