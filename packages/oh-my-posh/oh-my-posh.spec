@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           oh-my-posh
-Version:        30.5.0
+Version:        30.6.1
 Release:        2%{?dist}
 Summary:        A prompt theme engine for any shell
 
