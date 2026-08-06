@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           vale
-Version:        3.17.0
+Version:        3.17.1
 Release:        1%{?dist}
 Summary:        A linter for prose
 
