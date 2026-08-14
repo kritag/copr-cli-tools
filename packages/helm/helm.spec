@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           helm
-Version:        4.2.3
+Version:        4.2.4
 Release:        2%{?dist}
 Summary:        Kubernetes package manager
 
