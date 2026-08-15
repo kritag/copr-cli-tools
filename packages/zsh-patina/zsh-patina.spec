@@ -11,8 +11,6 @@ BuildRequires:  cargo
 BuildRequires:  gcc
 BuildRequires:  git-core
 
-Requires:       gcc-libs
-
 ExclusiveArch:  x86_64 aarch64 armv7hl
 
 %description
