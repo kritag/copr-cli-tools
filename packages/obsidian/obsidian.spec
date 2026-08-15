@@ -38,10 +38,10 @@ tar -xJf data.tar.xz
 
 %install
 cp -a opt %{buildroot}/
-cp -a usr/share %{buildroot}/%{_prefix}/
-[ -f %{buildroot}%{_datadir}/applications/obsidian.desktop ] && \
-  sed -i 's|/opt/Obsidian/obsidian|obsidian|g' \
-    %{buildroot}%{_datadir}/applications/obsidian.desktop
+mkdir -p %{buildroot}%{_datadir}
+cp -a usr/share/. %{buildroot}%{_datadir}/
+sed -i 's|/opt/Obsidian/obsidian|obsidian|g' \
+  %{buildroot}%{_datadir}/applications/md.obsidian.Obsidian.desktop
 install -Dpm0755 %{SOURCE1} %{buildroot}%{_bindir}/obsidian
 install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSE.electron.txt \
   %{buildroot}%{_licensedir}/%{name}/LICENSE.electron.txt
@@ -51,7 +51,7 @@ install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSES.chromium.html \
 %files
 %{_bindir}/obsidian
 /opt/Obsidian
-%{_datadir}/applications/obsidian.desktop
+%{_datadir}/applications/md.obsidian.Obsidian.desktop
 %{_datadir}/icons/hicolor/*/apps/obsidian.png
 %doc %{_docdir}/obsidian/changelog.gz
 %license %{_licensedir}/%{name}/LICENSE.electron.txt
