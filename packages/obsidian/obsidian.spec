@@ -38,8 +38,7 @@ tar -xJf data.tar.xz
 
 %install
 cp -a opt %{buildroot}/
-mkdir -p %{buildroot}%{_datadir}
-cp -a usr/share/* %{buildroot}%{_datadir}/
+cp -a usr/share %{buildroot}/%{_prefix}/
 [ -f %{buildroot}%{_datadir}/applications/obsidian.desktop ] && \
   sed -i 's|/opt/Obsidian/obsidian|obsidian|g' \
     %{buildroot}%{_datadir}/applications/obsidian.desktop
