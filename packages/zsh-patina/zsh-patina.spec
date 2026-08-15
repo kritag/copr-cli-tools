@@ -5,7 +5,7 @@ Summary:        A blazingly fast Zsh syntax highlighter
 
 License:        MIT
 URL:            https://github.com/michel-kraemer/zsh-patina
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  cargo
 BuildRequires:  gcc
