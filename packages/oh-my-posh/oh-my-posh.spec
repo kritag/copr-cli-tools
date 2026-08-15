@@ -32,9 +32,9 @@ install -pm0644 themes/* %{buildroot}%{_datadir}/%{name}/themes/
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 29.9.2-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 29.9.2-2
 - Repackage upstream release binary instead of building from source
 - Keep bundled theme files from the source archive
 
-* Fri Mar 27 2026 Codex <codex@example.invalid> - 29.9.2-1
+* Fri Mar 27 2026 Kristian Tagesen <kristian@example.invalid> - 29.9.2-1
 - Initial package

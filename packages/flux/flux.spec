@@ -43,16 +43,16 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-4
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.8.5-4
 - Repackage upstream release binary instead of building from source
 - Keep shell completion generation during install
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-3
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.8.5-3
 - Generate embedded manifests with upstream bundle script
 - Add kustomize build dependency
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.8.5-2
 - Stage embedded manifest YAMLs into cmd/flux/manifests before build
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.8.5-1
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.8.5-1
 - Initial package

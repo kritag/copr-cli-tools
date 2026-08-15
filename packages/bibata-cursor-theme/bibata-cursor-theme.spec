@@ -31,5 +31,5 @@ cp -a * %{buildroot}%{_datadir}/icons/%{theme_name}/
 %{_datadir}/icons/%{theme_name}
 
 %changelog
-* Wed Apr 15 2026 Codex <codex@example.invalid> - 2.0.7-1
+* Wed Apr 15 2026 Kristian Tagesen <kristian@example.invalid> - 2.0.7-1
 - Initial package shipping only Bibata-Modern-Classic

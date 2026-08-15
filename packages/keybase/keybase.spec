@@ -108,20 +108,20 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_docdir}/%{name}/README.meta
 /opt/keybase
 
 %changelog
-* Wed Jun 11 2026 kritag <kristian.tagesen@tieto.com> - 6.6.3-5
+* Wed Jun 11 2026 kritag <kristian@example.invalid> - 6.6.3-5
 - Update upstream build to 20260603142455.f60f2ff97e (previous build no longer available)
 
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 6.6.2-1
 - Initial split package (meta + cli + kbfs + gui)
 - Source from official upstream Debian artifact
 
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-2
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 6.6.2-2
 - Replace %{_userunitdir} with explicit systemd user unit paths
 - Fix COPR build failure in minimal Fedora buildroot
 
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-3
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 6.6.2-3
 - Include mozilla native messaging host and upstream keyring file
 - Remove duplicate LICENSE file listing warning
 
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 6.6.2-4
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 6.6.2-4
 - Fix mozilla native messaging host path (`/usr/lib`, not `%{_libdir}`)

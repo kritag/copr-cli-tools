@@ -37,7 +37,7 @@ install -Dpm0644 %{SOURCE3} %{buildroot}%{_docdir}/%{name}/README.md
 %doc %{_docdir}/%{name}/README.md
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.11.1-2
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 0.11.1-2
 - Repackage upstream release binary instead of building from source
 
 * Sat Mar 28 2026 kritag <3776749+kritag@users.noreply.github.com> - 0.10.1-1

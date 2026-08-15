@@ -63,12 +63,12 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Fri Apr 24 2026 Codex <codex@example.invalid> - 1.36.0-1
+* Fri Apr 24 2026 Kristian Tagesen <kristian@example.invalid> - 1.36.0-1
 - Use GOTOOLCHAIN=auto and keep Go workspace mode for kubectl 1.36 builds
 - Align embedded gitMinor metadata with v1.36
 
-* Fri Apr 24 2026 Codex <codex@example.invalid> - 1.35.4-1
+* Fri Apr 24 2026 Kristian Tagesen <kristian@example.invalid> - 1.35.4-1
 - Disable Go workspace mode during build for Fedora 43 compatibility
 
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 1.35.3-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 1.35.3-1
 - Build kubectl from the Kubernetes source tree

@@ -65,10 +65,10 @@ install -Dpm0644 usr/lib/slack/LICENSE \
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 4.49.81-2
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 4.49.81-2
 - Normalize desktop icon entry to Icon=slack
 - Prune bundled source payload under /usr/lib/slack/src
 - Keep wrapper launcher so bundled shared libraries resolve correctly
 
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 4.49.81-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 4.49.81-1
 - Initial package

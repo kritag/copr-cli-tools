@@ -47,5 +47,5 @@ install -Dpm0644 _flavours %{buildroot}%{_datadir}/zsh/site-functions/_flavours
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.7.1-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 0.7.1-1
 - Initial package

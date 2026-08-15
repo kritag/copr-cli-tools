@@ -30,5 +30,5 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Mar 26 2025 Codex <codex@example.invalid> - 3.3.6-1
+* Wed Mar 26 2025 Kristian Tagesen <kristian@example.invalid> - 3.3.6-1
 - Update to 3.3.6

@@ -53,5 +53,5 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE.md
 %{_mandir}/man1/*.1*
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2024.08.24-1
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2024.08.24-1
 - Initial package

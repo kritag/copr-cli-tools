@@ -59,11 +59,11 @@ install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSES.chromium.html \
 %license %{_licensedir}/%{name}/LICENSES.chromium.html
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-3
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 1.12.7-3
 - Package the upstream Debian changelog installed under %%{_docdir}
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 1.12.7-2
 - Fix Debian data installation paths
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 1.12.7-1
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 1.12.7-1
 - Initial package

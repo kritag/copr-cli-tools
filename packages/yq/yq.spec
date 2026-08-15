@@ -53,5 +53,5 @@ install -Dpm0644 yq.fish %{buildroot}%{_datadir}/fish/vendor_completions.d/yq.fi
 %{_datadir}/fish/vendor_completions.d/yq.fish
 
 %changelog
-* Wed Mar 25 2026 Codex <codex@example.invalid> - 4.52.4-1
+* Wed Mar 25 2026 Kristian Tagesen <kristian@example.invalid> - 4.52.4-1
 - Build from source archive and install shell completions

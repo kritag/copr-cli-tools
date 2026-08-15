@@ -39,5 +39,5 @@ done
 %config(noreplace) %{_sysconfdir}/environment.d/*
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.14.0-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 0.14.0-1
 - Initial package

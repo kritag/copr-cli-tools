@@ -32,8 +32,8 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 0.36.1-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 0.36.1-2
 - Repackage upstream release binary instead of building from source
 
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.36.1-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 0.36.1-1
 - Initial package

@@ -46,6 +46,6 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 0.6.0-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 0.6.0-1
 - Update to 0.6.0
 - Allow automatic Go toolchain bootstrap for Fedora 43

@@ -69,11 +69,11 @@ cp -a docs %{buildroot}%{_docdir}/%{name}/
 %doc %{_docdir}/%{name}/docs
 
 %changelog
-* Thu Apr 09 2026 Codex <codex@example.invalid> - 0.5.0-3
+* Thu Apr 09 2026 Kristian Tagesen <kristian@example.invalid> - 0.5.0-3
 - Provide a local kubectl shim during tests so integration tests can invoke kubectl krew
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 0.5.0-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 0.5.0-2
 - Drop unnecessary kubectl BuildRequires so the package can build before kubectl is present
 
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.5.0-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 0.5.0-1
 - Initial package

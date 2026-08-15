@@ -42,9 +42,9 @@ mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 4.1.4-2
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 4.1.4-2
 - Repackage upstream release binary instead of building from source
 - Keep shell completion generation during install
 
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 4.1.3-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 4.1.3-1
 - Initial package

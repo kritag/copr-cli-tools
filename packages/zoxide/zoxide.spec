@@ -46,5 +46,5 @@ install -Dpm0644 contrib/completions/zoxide.bash %{buildroot}%{_datadir}/bash-co
 %{_datadir}/bash-completion/completions/zoxide
 
 %changelog
-* Wed Mar 25 2026 Codex <codex@example.invalid> - 0.9.9-1
+* Wed Mar 25 2026 Kristian Tagesen <kristian@example.invalid> - 0.9.9-1
 - Build from source and install docs, man pages, and completions

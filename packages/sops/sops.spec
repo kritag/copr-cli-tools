@@ -57,8 +57,8 @@ install -Dpm0644 README.rst %{buildroot}%{_docdir}/%{name}/README.rst
 %doc %{_docdir}/%{name}/README.rst
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 3.12.2-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 3.12.2-2
 - Fix completion source paths during install
 
-* Wed Mar 26 2025 Codex <codex@example.invalid> - 3.12.2-1
+* Wed Mar 26 2025 Kristian Tagesen <kristian@example.invalid> - 3.12.2-1
 - Initial package

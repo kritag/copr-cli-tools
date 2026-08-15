@@ -56,5 +56,5 @@ install -Dpm0644 target/man/eza_colors-explanation.5 %{buildroot}%{_mandir}/man5
 %{_mandir}/man5/eza_colors-explanation.5*
 
 %changelog
-* Thu Mar 26 2025 Codex <codex@example.invalid> - 0.23.4-1
+* Thu Mar 26 2025 Kristian Tagesen <kristian@example.invalid> - 0.23.4-1
 - Initial package

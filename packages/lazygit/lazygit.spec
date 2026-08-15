@@ -50,5 +50,5 @@ cp -r docs/* %{buildroot}%{_docdir}/%{name}/
 %doc %{_docdir}/%{name}
 
 %changelog
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 0.60.0-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 0.60.0-1
 - Build from source archive

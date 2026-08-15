@@ -64,5 +64,5 @@ install -Dpm0644 *.md -t %{buildroot}%{_docdir}/%{name}
 %doc %{_docdir}/%{name}
 
 %changelog
-* Thu Mar 26 2026 Codex <codex@example.invalid> - 1.33.1-1
+* Thu Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 1.33.1-1
 - Initial package

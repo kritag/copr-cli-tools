@@ -42,5 +42,5 @@ install -Dpm0644 _zsh_patina %{buildroot}%{_datadir}/zsh/site-functions/_zsh_pat
 %{_datadir}/zsh/site-functions/_zsh_patina
 
 %changelog
-* Fri Aug 15 2026 Kristian Tagesen <kristian.tagesen@tieto.com> - 1.9.0-1
+* Fri Aug 15 2026 Kristian Tagesen <kristian@example.invalid> - 1.9.0-1
 - Initial package, built from source with cargo

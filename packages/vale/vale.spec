@@ -29,5 +29,5 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Thu May 22 2025 Kristian Tagesen <kristian.tagesen@tieto.com> - 3.14.2-1
+* Thu May 22 2025 Kristian Tagesen <kristian@example.invalid> - 3.14.2-1
 - Initial package

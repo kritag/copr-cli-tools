@@ -58,5 +58,5 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Tue Apr 14 2026 Codex <codex@example.invalid> - 1.14.8-1
+* Tue Apr 14 2026 Kristian Tagesen <kristian@example.invalid> - 1.14.8-1
 - Initial package

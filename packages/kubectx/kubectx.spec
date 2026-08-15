@@ -87,5 +87,5 @@ install -Dpm0644 completion/kubens.fish \
 %{_datadir}/fish/vendor_completions.d/kubens.fish
 
 %changelog
-* Wed Mar 26 2026 Codex <codex@example.invalid> - 0.11.0-1
+* Wed Mar 26 2026 Kristian Tagesen <kristian@example.invalid> - 0.11.0-1
 - Initial package

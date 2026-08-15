@@ -54,8 +54,8 @@ install -Dpm0644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.24-2
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.24-2
 - Install upstream lesspipe in a private path to avoid Fedora file conflicts
 
-* Wed Apr 08 2026 Codex <codex@example.invalid> - 2.24-1
+* Wed Apr 08 2026 Kristian Tagesen <kristian@example.invalid> - 2.24-1
 - Initial package
