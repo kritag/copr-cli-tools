@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           kubeseal
-Version:        0.39.0
+Version:        0.39.1
 Release:        2%{?dist}
 Summary:        One-way encrypted Secrets for Kubernetes
 
