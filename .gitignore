@@ -5,3 +5,4 @@ packages/*/.copr-sources/
 packages/*/.copr-rpmbuild/
 .codex/
 .codex
+.claude*
