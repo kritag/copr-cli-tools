@@ -63,6 +63,43 @@ update_from_release_notes() {
     "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
 }
 
+update_from_release_asset() {
+    local pattern api_url tag_name version
+
+    # Pick the newest non-draft, non-prerelease release that actually ships an
+    # asset matching the pattern. Upstreams sometimes publish a release for one
+    # platform only (e.g. an Android-only build), which would otherwise bump the
+    # version to a tag whose download URL does not exist.
+    pattern="${UPSTREAM_RELEASE_ASSET_PATTERN}"
+    api_url="https://api.github.com/repos/${UPSTREAM_REPO}/releases?per_page=50"
+
+    tag_name="$(
+        curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${api_url}" \
+        | jq -r --arg pattern "${pattern}" '
+            [ .[]
+              | select(.draft | not)
+              | select(.prerelease | not)
+              | select([.assets[].name | test($pattern)] | any)
+            ] | first | .tag_name // empty
+        '
+    )"
+
+    if [[ -z "${tag_name}" ]]; then
+        echo "No ${UPSTREAM_REPO} release found with an asset matching ${pattern}" >&2
+        exit 1
+    fi
+
+    version="${tag_name}"
+    if [[ -n "${tag_prefix}" && "${version}" == "${tag_prefix}"* ]]; then
+        version="${version#${tag_prefix}}"
+    fi
+
+    "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
+}
+
 if [[ ! -f "${meta_path}" ]]; then
     echo "Missing upstream metadata: ${meta_path}" >&2
     exit 1
@@ -75,6 +112,8 @@ if [[ -z "${UPSTREAM_REPO:-}" && -n "${OWNER:-}" && -n "${REPO:-}" ]]; then
     UPSTREAM_REPO="${OWNER}/${REPO}"
 fi
 
+tag_prefix="${UPSTREAM_TAG_PREFIX:-v}"
+
 if [[ -n "${UPSTREAM_MIRROR_URL:-}" ]]; then
     update_from_openshift_mirror
     exit 0
@@ -85,12 +124,15 @@ if [[ -n "${UPSTREAM_RELEASE_NOTES_URL:-}" ]]; then
     exit 0
 fi
 
+if [[ -n "${UPSTREAM_RELEASE_ASSET_PATTERN:-}" ]]; then
+    update_from_release_asset
+    exit 0
+fi
+
 if [[ -z "${UPSTREAM_REPO:-}" ]]; then
     echo "Skipping ${package}: no supported upstream release metadata" >&2
     exit 0
 fi
-
-tag_prefix="${UPSTREAM_TAG_PREFIX:-v}"
 
 api_url="https://api.github.com/repos/${UPSTREAM_REPO}/releases/latest"
 tag_name="$(
