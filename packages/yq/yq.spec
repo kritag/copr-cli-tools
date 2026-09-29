@@ -1,5 +1,5 @@
 Name:           yq
-Version:        4.53.6
+Version:        4.54.1
 Release:        1%{?dist}
 Summary:        Portable YAML, JSON, XML, CSV, and TOML processor
 
