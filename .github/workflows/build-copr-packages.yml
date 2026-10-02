@@ -106,7 +106,6 @@ jobs:
         env:
           PACKAGES: ${{ steps.packages.outputs.packages }}
           REPO_CLONE_URL: https://github.com/${{ github.repository }}.git
-          COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
         run: |
           set -euo pipefail
 
@@ -115,18 +114,26 @@ jobs:
             exit 0
           fi
 
+          cp ~/.config/copr ../copr.conf
+
+          docker run --rm \
+            -v "${PWD}/../copr.conf:/root/.config/copr:ro" \
+            registry.fedoraproject.org/fedora:44 \
+            bash -lc "
+              set -euo pipefail
+              dnf -y install copr-cli >/dev/null
+              copr-cli modify bonvaffel/cli-tools --enable-net on
+            "
+
           for package in ${PACKAGES}; do
             package="$(printf '%s\n' "${package}" | sed -E 's#^packages/([^/]+)/[^/]+\.spec$#\1#; s#^([^/]+)\.spec$#\1#')"
             docker run --rm \
-              -e COPR_CONFIG="${COPR_CONFIG}" \
               -v "${PWD}:/work:ro" \
+              -v "${PWD}/../copr.conf:/root/.config/copr:ro" \
               -w /work \
               registry.fedoraproject.org/fedora:44 \
               bash -lc "
                 set -euo pipefail
-                mkdir -p /root/.config
-                printf '%s\n' \"\${COPR_CONFIG}\" > /root/.config/copr
-                chmod 600 /root/.config/copr
                 dnf -y install copr-cli >/dev/null
                 if ! copr-cli get-package bonvaffel/cli-tools --name '${package}' >/dev/null 2>&1; then
                   copr-cli add-package-scm bonvaffel/cli-tools \
