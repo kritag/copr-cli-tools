@@ -1,6 +1,6 @@
 %define debug_package %{nil}
 
-Name:           imx471-dkms
+Name:           imx471-dkms-git
 Version:        1.0
 Release:        %(git rev-list --count HEAD 2>/dev/null || echo 1).%(git rev-parse --short HEAD 2>/dev/null || echo 'unknown')%{?dist}
 Summary:        IMX471 sensor driver via DKMS
