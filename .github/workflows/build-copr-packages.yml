@@ -54,9 +54,9 @@ jobs:
             exit 1
           fi
 
-          mkdir -p ~/.config
-          printf '%s\n' "${COPR_CONFIG}" > ~/.config/copr
-          chmod 600 ~/.config/copr
+          mkdir -p ~/.config/copr
+          printf '%s\n' "${COPR_CONFIG}" > ~/.config/copr/copr.conf
+          chmod 600 ~/.config/copr/copr.conf
 
       - name: Resolve packages to build
         id: packages
