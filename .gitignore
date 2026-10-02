@@ -3,6 +3,8 @@ results/
 *.rpm
 packages/*/.copr-sources/
 packages/*/.copr-rpmbuild/
+.copr/.copr-sources/
+.copr/.copr-rpmbuild/
 .codex/
 .codex
 .claude*
