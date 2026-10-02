@@ -116,6 +116,11 @@ jobs:
 
           cp ~/.config/copr ../copr.conf
 
+          if [[ ! -f ../copr.conf ]]; then
+            echo "ERROR: copr.conf not found at $(pwd)/../copr.conf" >&2
+            exit 1
+          fi
+
           docker run --rm \
             -v "${PWD}/../copr.conf:/root/.config/copr:ro" \
             registry.fedoraproject.org/fedora:44 \
