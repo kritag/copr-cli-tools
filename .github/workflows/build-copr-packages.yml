@@ -106,6 +106,7 @@ jobs:
         env:
           PACKAGES: ${{ steps.packages.outputs.packages }}
           REPO_CLONE_URL: https://github.com/${{ github.repository }}.git
+          COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
         run: |
           set -euo pipefail
 
