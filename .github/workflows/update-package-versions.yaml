@@ -83,8 +83,38 @@ jobs:
           echo "changed=true" >> "${GITHUB_OUTPUT}"
           echo "packages=${packages}" >> "${GITHUB_OUTPUT}"
 
+      - name: Find packages missing a COPR build
+        id: pending
+        run: |
+          set -euo pipefail
+
+          packages=()
+          for spec in packages/*/*.spec; do
+            package="$(basename "$(dirname "${spec}")")"
+            version="$(awk '/^Version:/ {print $2; exit}' "${spec}")"
+
+            latest="$(
+              curl -fsSL "https://copr.fedorainfracloud.org/api_3/build/list/?ownername=bonvaffel&projectname=cli-tools&packagename=${package}&limit=1" \
+                | jq -r '.items[0] // empty | "\(.state) \(.source_package.version // "")"'
+            )"
+            state="${latest%% *}"
+            built="${latest#* }"
+            built="${built%-*}"
+
+            case "${state}" in
+              pending|starting|running|importing|waiting|forked) continue ;;
+            esac
+
+            if [[ -z "${latest}" || "${state}" == "failed" || "${built}" != "${version}" ]]; then
+              echo "${package}: spec=${version} copr=${built:-none} (${state:-no builds})"
+              packages+=("${package}")
+            fi
+          done
+
+          echo "packages=${packages[*]:-}" >> "${GITHUB_OUTPUT}"
+
       - name: Configure copr-cli
-        if: steps.commit.outputs.changed == 'true'
+        if: steps.pending.outputs.packages != ''
         env:
           COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
         run: |
@@ -100,9 +130,9 @@ jobs:
           chmod 600 ~/.config/copr
 
       - name: Trigger COPR builds
-        if: steps.commit.outputs.changed == 'true'
+        if: steps.pending.outputs.packages != ''
         env:
-          PACKAGES: ${{ steps.commit.outputs.packages }}
+          PACKAGES: ${{ steps.pending.outputs.packages }}
           REPO_CLONE_URL: https://github.com/${{ github.repository }}.git
         run: |
           set -euo pipefail
@@ -140,6 +170,7 @@ jobs:
                     --clone-url '${REPO_CLONE_URL}' \
                     --subdir 'packages/${package}' \
                     --spec '${package}.spec' \
+                    --webhook-rebuild off \
                     --method make_srpm
                 else
                   copr-cli edit-package-scm bonvaffel/cli-tools \
@@ -147,6 +178,7 @@ jobs:
                     --clone-url '${REPO_CLONE_URL}' \
                     --subdir 'packages/${package}' \
                     --spec '${package}.spec' \
+                    --webhook-rebuild off \
                     --method make_srpm
                 fi
                 copr-cli build-package bonvaffel/cli-tools \
