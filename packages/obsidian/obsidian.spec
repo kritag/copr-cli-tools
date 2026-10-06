@@ -53,6 +53,7 @@ install -Dpm0644 %{buildroot}/opt/Obsidian/LICENSES.chromium.html \
 /opt/Obsidian
 %{_datadir}/applications/md.obsidian.Obsidian.desktop
 %{_datadir}/icons/hicolor/*/apps/obsidian.png
+%{_datadir}/mime/packages/obsidian.xml
 %doc %{_docdir}/obsidian/changelog.gz
 %license %{_licensedir}/%{name}/LICENSE.electron.txt
 %license %{_licensedir}/%{name}/LICENSES.chromium.html
