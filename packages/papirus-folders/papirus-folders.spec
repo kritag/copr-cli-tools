@@ -8,6 +8,7 @@ URL:            https://github.com/PapirusDevelopmentTeam/papirus-folders
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
+BuildRequires:  make
 Requires:       bash
 Requires:       papirus-icon-theme
 
