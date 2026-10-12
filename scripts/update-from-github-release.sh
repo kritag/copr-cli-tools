@@ -63,6 +63,43 @@ update_from_release_notes() {
     "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
 }
 
+update_from_commit() {
+    local branch commit_json sha commit_date base_version version
+
+    branch="${UPSTREAM_BRANCH:-main}"
+    commit_json="$(
+        curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${UPSTREAM_REPO}/commits/${branch}"
+    )"
+    sha="$(jq -r '.sha // empty' <<<"${commit_json}")"
+    commit_date="$(jq -r '.commit.committer.date // empty | .[0:10] | gsub("-"; "")' <<<"${commit_json}")"
+
+    if [[ -z "${sha}" || -z "${commit_date}" ]]; then
+        echo "No commit found for ${UPSTREAM_REPO}@${branch}" >&2
+        exit 1
+    fi
+
+    base_version="$(
+        curl -fsSL "https://raw.githubusercontent.com/${UPSTREAM_REPO}/${sha}/Cargo.toml" \
+        | sed -nE 's/^version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/p' \
+        | head -n1
+    )"
+
+    if [[ -z "${base_version}" ]]; then
+        echo "No Cargo.toml version found for ${UPSTREAM_REPO}@${sha}" >&2
+        exit 1
+    fi
+
+    version="${base_version}^${commit_date}git${sha:0:7}"
+
+    sed -i -E "s/^(%global commit[[:space:]]+).*/\1${sha}/" \
+        "${repo_root}/packages/${package}/${package}.spec"
+
+    "${repo_root}/scripts/bump-version.sh" "${package}" "${version}"
+}
+
 update_from_release_asset() {
     local pattern api_url tag_name version
 
@@ -113,6 +150,11 @@ if [[ -z "${UPSTREAM_REPO:-}" && -n "${OWNER:-}" && -n "${REPO:-}" ]]; then
 fi
 
 tag_prefix="${UPSTREAM_TAG_PREFIX:-v}"
+
+if [[ "${UPSTREAM_TRACK_COMMIT:-}" == "true" ]]; then
+    update_from_commit
+    exit 0
+fi
 
 if [[ -n "${UPSTREAM_MIRROR_URL:-}" ]]; then
     update_from_openshift_mirror

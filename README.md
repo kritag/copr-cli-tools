@@ -30,6 +30,7 @@ Current target packages:
 - yq
 - zoxide
 - eza
+- tinty (tracks upstream main, not releases)
 
 ## Layout
 
