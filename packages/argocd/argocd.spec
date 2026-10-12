@@ -25,8 +25,18 @@ installs the upstream prebuilt CLI binary.
 install -Dpm0755 %{SOURCE0} %{buildroot}%{_bindir}/argocd
 install -Dpm0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 
+mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
+mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
+mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
+%{buildroot}%{_bindir}/argocd completion bash > %{buildroot}%{_datadir}/bash-completion/completions/argocd
+%{buildroot}%{_bindir}/argocd completion zsh > %{buildroot}%{_datadir}/zsh/site-functions/_argocd
+%{buildroot}%{_bindir}/argocd completion fish > %{buildroot}%{_datadir}/fish/vendor_completions.d/argocd.fish
+
 %files
 %{_bindir}/argocd
+%{_datadir}/bash-completion/completions/argocd
+%{_datadir}/zsh/site-functions/_argocd
+%{_datadir}/fish/vendor_completions.d/argocd.fish
 %license %{_licensedir}/%{name}/LICENSE
 
 %changelog
