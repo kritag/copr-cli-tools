@@ -30,6 +30,7 @@ Current target packages:
 - yq
 - zoxide
 - eza
+- papirus-folders
 - tinty (tracks upstream main, not releases)
 
 ## Layout
