@@ -10,7 +10,7 @@ Source0:        %{url}/archive/refs/tags/v%{version}.zip#/%{name}-%{version}.zip
 BuildArch:      noarch
 BuildRequires:  unzip
 Requires:       fontconfig
-Requires:       freetype2
+Requires:       freetype
 Requires:       pam
 
 %description
