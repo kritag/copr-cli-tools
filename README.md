@@ -22,6 +22,7 @@ Current target packages:
 - stern
 - terraform
 - flux
+- flux-operator-mcp
 - flavours
 - kubeconform
 - bat-extras
