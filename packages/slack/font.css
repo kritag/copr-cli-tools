@@ -1,0 +1,7 @@
+/* Edit font names, then restart Slack. */
+body, body :not(code):not(pre):not([class*="c-mrkdwn__code"]):not([class*="c-mrkdwn__pre"]) {
+  font-family: "Geist", "Slack-Lato", sans-serif !important;
+}
+code, pre, [class*="c-mrkdwn__code"], [class*="c-mrkdwn__pre"] {
+  font-family: "Geist Mono", monospace !important;
+}

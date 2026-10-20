@@ -3,16 +3,26 @@
 
 Name:           slack
 Version:        4.52.178
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Team communication app for Linux
 
 License:        LicenseRef-Slack
 URL:            https://slack.com/release-notes/linux
 Source0:        https://downloads.slack-edge.com/desktop-releases/linux/x64/%{version}/slack-desktop-%{version}-amd64.deb
 Source1:        slack
+Source2:        patch-asar.py
+Source3:        slack-font.js
+Source4:        font.css
+Source5:        fonts/Geist-VF.ttf
+Source6:        fonts/Geist-Italic-VF.ttf
+Source7:        fonts/GeistMono-Regular.ttf
+Source8:        fonts/GeistMono-Bold.ttf
+Source9:        fonts/GeistMono-Italic.ttf
+Source10:       fonts/GeistMono-BoldItalic.ttf
 
 ExclusiveArch:  x86_64
 BuildRequires:  binutils
+BuildRequires:  python3
 BuildRequires:  tar
 BuildRequires:  xz
 BuildRequires:  zstd
@@ -49,6 +59,10 @@ install -Dpm0755 %{SOURCE1} %{buildroot}%{_bindir}/slack
 mkdir -p %{buildroot}%{_prefix}/lib
 cp -a usr/lib/slack %{buildroot}%{_prefix}/lib/
 rm -rf %{buildroot}%{_prefix}/lib/slack/src
+# Inject user-editable CSS (/etc/slack/font.css) into every window; fails the build if upstream moves boot.bundle.cjs
+python3 -I %{SOURCE2} %{buildroot}%{_prefix}/lib/slack/resources/app.asar dist/boot.bundle.cjs %{SOURCE3}
+install -Dpm0644 %{SOURCE4} %{buildroot}%{_sysconfdir}/slack/font.css
+install -Dpm0644 -t %{buildroot}%{_datadir}/fonts/slack-geist %{SOURCE5} %{SOURCE6} %{SOURCE7} %{SOURCE8} %{SOURCE9} %{SOURCE10}
 install -Dpm0644 usr/share/applications/slack.desktop \
   %{buildroot}%{_datadir}/applications/slack.desktop
 install -Dpm0644 usr/share/pixmaps/slack.png \
@@ -59,7 +73,9 @@ install -Dpm0644 usr/lib/slack/LICENSE \
 
 %files
 %{_bindir}/slack
+%config(noreplace) %{_sysconfdir}/slack/font.css
 %{_prefix}/lib/slack
+%{_datadir}/fonts/slack-geist
 %{_datadir}/applications/slack.desktop
 %{_datadir}/pixmaps/slack.png
 %license %{_licensedir}/%{name}/LICENSE
