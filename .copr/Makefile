@@ -13,7 +13,7 @@ srpm:
 		if echo "$$url" | grep -q '://'; then \
 			curl -L --fail --retry 3 -o "$(SRCDIR)/$$(basename "$$url")" "$$url"; \
 		else \
-			cp "$(dir $(spec))$$url" "$(SRCDIR)/$$url"; \
+			cp "$(dir $(spec))$$url" "$(SRCDIR)/$$(basename "$$url")"; \
 		fi; \
 	done
 	rpmbuild -bs "$(spec)" \
