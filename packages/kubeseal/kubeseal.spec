@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           kubeseal
-Version:        0.41.1
+Version:        helm-v2.21.0
 Release:        2%{?dist}
 Summary:        One-way encrypted Secrets for Kubernetes
 
