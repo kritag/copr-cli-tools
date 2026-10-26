@@ -13,6 +13,7 @@ Current target packages:
 - keybase
 - helm
 - lazygit
+- spicetify
 - lucidglyph
 - lesspipe
 - obsidian
