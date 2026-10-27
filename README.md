@@ -14,6 +14,7 @@ Current target packages:
 - helm
 - lazygit
 - spicetify
+- hazelnut
 - lucidglyph
 - lesspipe
 - obsidian
