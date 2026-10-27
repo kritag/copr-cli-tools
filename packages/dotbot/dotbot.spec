@@ -1,5 +1,5 @@
 Name:           dotbot
-Version:        1.24.1
+Version:        1.24.0
 Release:        1%{?dist}
 Summary:        Tool that bootstraps your dotfiles
 
