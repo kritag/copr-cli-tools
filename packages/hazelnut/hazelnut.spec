@@ -8,7 +8,8 @@ Summary:        Terminal-based automated file organizer inspired by Hazel
 
 License:        GPL-3.0-only
 URL:            https://github.com/ricardodantas/hazelnut
-Source0:        %{url}/releases/download/v%{version}/hazelnut-%{version}-%{_arch}-unknown-linux-gnu.tar.gz
+Source0:        %{url}/releases/download/v%{version}/hazelnut-%{version}-x86_64-unknown-linux-gnu.tar.gz
+Source3:        %{url}/releases/download/v%{version}/hazelnut-%{version}-aarch64-unknown-linux-gnu.tar.gz
 Source1:        https://raw.githubusercontent.com/ricardodantas/hazelnut/v%{version}/LICENSE
 Source2:        https://raw.githubusercontent.com/ricardodantas/hazelnut/v%{version}/README.md
 
@@ -20,7 +21,11 @@ hazelnut watches folders and organizes files with rules. It ships a terminal UI
 
 %prep
 %autosetup -c -T
+%ifarch x86_64
 tar -xzf %{SOURCE0}
+%else
+tar -xzf %{SOURCE3}
+%endif
 
 %install
 install -Dpm0755 hazelnut %{buildroot}%{_bindir}/hazelnut
