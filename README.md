@@ -16,6 +16,7 @@ Current target packages:
 - spicetify
 - hazelnut
 - dotbot
+- runapp
 - lucidglyph
 - lesspipe
 - obsidian
