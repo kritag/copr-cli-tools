@@ -1,5 +1,5 @@
 Name:           kubectl
-Version:        1.37.1
+Version:        1.37.2
 Release:        1%{?dist}
 Summary:        Kubernetes command-line tool
 

@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           flux-operator-mcp
-Version:        0.62.0
+Version:        0.62.1
 Release:        1%{?dist}
 Summary:        MCP server for debugging Flux CD on live Kubernetes clusters
 
