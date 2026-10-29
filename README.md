@@ -15,6 +15,7 @@ Current target packages:
 - lazygit
 - spicetify
 - hazelnut
+- openlogi
 - dotbot
 - runapp
 - lucidglyph
