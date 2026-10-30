@@ -2,7 +2,7 @@
 %global _build_id_links none
 
 Name:           slack
-Version:        4.53.269
+Version:        4.53.276
 Release:        3%{?dist}
 Summary:        Team communication app for Linux
 
