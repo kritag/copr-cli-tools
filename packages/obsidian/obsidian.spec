@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           obsidian
-Version:        1.14.5
+Version:        1.15.0
 Release:        3%{?dist}
 Summary:        Knowledge base application for Markdown notes
 
