@@ -1,5 +1,5 @@
 Name:           hyprland-preview-share-picker
-Version:        0.2.1
+Version:        0.3.1
 Release:        1%{?dist}
 Summary:        Alternative share picker for Hyprland with window and monitor previews
 
