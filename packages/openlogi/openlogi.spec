@@ -2,7 +2,7 @@
 %global __strip /bin/true
 
 Name:           openlogi
-Version:        0.8.20
+Version:        0.9.0
 Release:        1%{?dist}
 Summary:        Local-first companion for Logitech HID++ peripherals
 
