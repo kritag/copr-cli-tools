@@ -1,5 +1,5 @@
 Name:           lucidglyph
-Version:        0.16.0
+Version:        0.16.1
 Release:        1%{?dist}
 Summary:        Tuned font rendering adjustments for Linux
 
