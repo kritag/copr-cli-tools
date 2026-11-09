@@ -2,7 +2,7 @@
 %global __strip /bin/true
 
 Name:           hazelnut
-Version:        0.3.0
+Version:        0.3.2
 Release:        1%{?dist}
 Summary:        Terminal-based automated file organizer inspired by Hazel
 
