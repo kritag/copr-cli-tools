@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           oc
-Version:        4.22.22
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        OpenShift command-line client
 

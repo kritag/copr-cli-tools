@@ -1,8 +1,8 @@
-%global commit      e0a81f516dd989338dfe96ed16d7502ae774fbdb
+%global commit      a14f1c26d158a70d271cb2c7129b29f761252f76
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           tinty
-Version:        0.35.0^20261103gite0a81f5
+Version:        0.35.0^20261110gita14f1c2
 Release:        1%{?dist}
 Summary:        A base16 and base24 color scheme manager
 
