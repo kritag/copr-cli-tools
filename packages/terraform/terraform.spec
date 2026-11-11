@@ -1,5 +1,5 @@
 Name:           terraform
-Version:        1.17.1
+Version:        1.17.2
 Release:        1%{?dist}
 Summary:        Build and update infrastructure as code idempotently
 
