@@ -19,6 +19,7 @@ Current target packages:
 - dotbot
 - runapp
 - protonplus
+- tealdeer
 - lucidglyph
 - lesspipe
 - obsidian
