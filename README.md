@@ -18,6 +18,7 @@ Current target packages:
 - openlogi
 - dotbot
 - runapp
+- protonplus
 - lucidglyph
 - lesspipe
 - obsidian
