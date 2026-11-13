@@ -2,7 +2,7 @@
 %global __strip /bin/true
 
 Name:           spicetify
-Version:        2.46.4
+Version:        2.46.7
 Release:        1%{?dist}
 Summary:        Command-line tool to customize the Spotify client
 
