@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           argocd
-Version:        3.6.2
+Version:        3.6.3
 Release:        1%{?dist}
 Summary:        Declarative GitOps continuous delivery tool for Kubernetes
 
